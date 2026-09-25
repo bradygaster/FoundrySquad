@@ -14,33 +14,78 @@ public sealed record ChangeRecord(
 
 public sealed record ToolResult(string Status, string ChangeId, ChangeRecord? Change, string? Message);
 
-public interface IAdvisoryModel
+public sealed record ToolCallRequest(string ToolName, string ChangeId);
+
+public sealed record AgentTurn(ToolCallRequest? ToolCall, string? FinalResponse)
 {
-    Task<string> ComposeAsync(ToolResult evidence, CancellationToken cancellationToken);
+    public static AgentTurn CallTool(string toolName, string changeId) =>
+        new(new ToolCallRequest(toolName, changeId), null);
+
+    public static AgentTurn Complete(string response) => new(null, response);
 }
 
-public sealed class ChangeRiskAdvisor(ChangeRecordTool tool, IAdvisoryModel model)
+public interface IAdvisoryAgent
+{
+    Task<AgentTurn> StartAsync(string changeId, CancellationToken cancellationToken);
+    Task<AgentTurn> ContinueAsync(
+        ToolCallRequest request,
+        ToolResult result,
+        CancellationToken cancellationToken);
+}
+
+public sealed class ChangeRiskAdvisor(ChangeRecordTool tool, IAdvisoryAgent agent)
 {
     public async Task<string> AssessAsync(string changeId, CancellationToken cancellationToken)
     {
-        var evidence = await tool.ExecuteAsync(changeId, cancellationToken);
-        return await model.ComposeAsync(evidence, cancellationToken);
+        var firstTurn = await agent.StartAsync(changeId, cancellationToken);
+        var request = firstTurn.ToolCall ??
+            throw new InvalidOperationException("The agent must request authoritative evidence before answering.");
+        if (firstTurn.FinalResponse is not null)
+        {
+            throw new InvalidOperationException("The agent cannot answer before the tool result.");
+        }
+        if (!string.Equals(request.ToolName, "get_change_record", StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException("The agent requested a tool that is not allowlisted.");
+        }
+        if (!string.Equals(request.ChangeId.Trim(), changeId.Trim(), StringComparison.OrdinalIgnoreCase))
+        {
+            throw new InvalidOperationException("The tool request does not match the user's change ID.");
+        }
+
+        var evidence = await tool.ExecuteAsync(request.ChangeId, cancellationToken);
+        var finalTurn = await agent.ContinueAsync(request, evidence, cancellationToken);
+        if (finalTurn.ToolCall is not null)
+        {
+            throw new InvalidOperationException("The agent exceeded the one-tool-call limit.");
+        }
+        return finalTurn.FinalResponse ??
+            throw new InvalidOperationException("The agent did not produce a final advisory.");
     }
 }
 
-public sealed class DeterministicAdvisoryModel : IAdvisoryModel
+public sealed class DeterministicAdvisoryModel : IAdvisoryAgent
 {
-    public Task<string> ComposeAsync(ToolResult evidence, CancellationToken cancellationToken)
+    public Task<AgentTurn> StartAsync(string changeId, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        return Task.FromResult(AgentTurn.CallTool("get_change_record", changeId));
+    }
+
+    public Task<AgentTurn> ContinueAsync(
+        ToolCallRequest request,
+        ToolResult evidence,
+        CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
         if (evidence.Status != "found" || evidence.Change is null)
         {
-            return Task.FromResult(string.Join(Environment.NewLine,
+            return Task.FromResult(AgentTurn.Complete(string.Join(Environment.NewLine,
                 $"Change: {evidence.ChangeId}",
                 "Classification: insufficient-evidence",
                 "Factors: no authoritative change record was retrieved",
                 $"Missing evidence: {evidence.Message ?? "change record"}",
-                "Next action: a human release engineer must verify the change record."));
+                "Next action: a human release engineer must verify the change record.")));
         }
 
         var change = evidence.Change;
@@ -68,12 +113,12 @@ public sealed class DeterministicAdvisoryModel : IAdvisoryModel
             factors.Add("observability plan present");
         }
 
-        return Task.FromResult(string.Join(Environment.NewLine,
+        return Task.FromResult(AgentTurn.Complete(string.Join(Environment.NewLine,
             $"Change: {change.Id}",
             $"Classification: {classification}",
             $"Factors: {string.Join("; ", factors)}",
             $"Missing evidence: {(classification == "low" ? "none in the synthetic record" : "resolve the cited gaps")}",
-            "Next action: a human release engineer must review this advisory before deployment."));
+            "Next action: a human release engineer must review this advisory before deployment.")));
     }
 }
 

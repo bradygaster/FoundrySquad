@@ -45,7 +45,7 @@ authenticated compatibility evidence exists.
 
 | Command or check | Result | What it proves | What it does not prove |
 | --- | --- | --- | --- |
-| `dotnet run --project samples/change-risk-agent/tests/ChangeRiskAgent.Tests` | PASS: 5 checks | Input validation, exact lookup, conservative policy, missing evidence, human ownership, and cancellation. | Foundry SDK/API compatibility or cloud runtime behavior. |
+| `dotnet run --project samples/change-risk-agent/tests/ChangeRiskAgent.Tests` | PASS: 10 checks | Observable agent/tool lifecycle, allowlist and binding enforcement, one-call limit, input validation, exact lookup, conservative policy, missing evidence, human ownership, and cancellation. | Foundry SDK/API compatibility or cloud runtime behavior. |
 | `dotnet run --project samples/change-risk-agent/src/ChangeRiskAgent -- CHG-1001` | PASS; low-risk advisory emitted | The documented happy path is runnable. | Model quality, latency, cost, quota, or capacity. |
 
 ## Friction and recovery
@@ -55,6 +55,7 @@ authenticated compatibility evidence exists.
 | Full Squad work began with several minutes of architecture ceremony. | No application files appeared during the initial target window. | Parent issued an implementation timebox and created a local-first fallback seam. | Full Mode had a 40-60 second target but no first-artifact rule. | Added a 60-second implementation-artifact requirement to response mode and routing. |
 | The first journal used custom headings and no comparison scores. | Cross-scenario analysis was not mechanically reliable. | Added validator, summarizer, exact headings, and scored evidence. | Handoff depended on prose rather than an executable schema. | Keep journal validation in repository tests and run it before integration. |
 | The local machine only had the .NET 10 SDK template. | A requested .NET 8 scaffold failed. | Used .NET 10, which satisfies the repository's .NET 8-or-later requirement. | Installed SDK/template availability differed from the initial assumption. | Discover SDKs before selecting an exact target framework. |
+| Initial fallback called the repository before the agent requested a tool. | The code demonstrated a safe tool contract but not an agent/tool-call lifecycle. | Added explicit request, allowlisted host dispatch, typed tool-result continuation, and final response turns. | The architecture contract did not make lifecycle evidence an implementation gate. | Reviewer now rejects direct repository calls presented as agent evidence. |
 
 ## What Squad did well
 
@@ -71,6 +72,7 @@ authenticated compatibility evidence exists.
 | Enforce experiment journals with an executable schema and summarizer. | templates and validation tooling | The first journal omitted shared headings and scores. | 4 | 2 | 3 |
 | Add tool execution location, side effects, reachability, timeout, and logging fields. | architecture decision and reviewer gate | The scenario rejected OpenAPI because Foundry cannot safely assume developer localhost reachability. | 4 | 2 | 3 |
 | Separate offline contract tests from opt-in authenticated smoke tests. | quality charter and sample template | Five useful checks ran without credentials while cloud runtime remained unknown. | 5 | 2 | 3 |
+| Require observable request-dispatch-result-final lifecycle evidence. | reviewer gate | The first fallback was a rules engine with a model-shaped interface, not an agent-requested tool call. | 5 | 2 | 3 |
 
 ## Comparison score
 
@@ -81,7 +83,7 @@ authenticated compatibility evidence exists.
 | Handoff quality | 4 | Architecture handoffs were detailed; the initial journal schema required correction. |
 | Evidence discipline | 5 | Local, documentation, authenticated, and runtime evidence stayed separate. |
 | Implementation usefulness | 4 | The sample runs and tests offline; the authenticated Foundry adapter remains pending. |
-| Quality coverage | 4 | Five deterministic safety paths pass; live model grounding remains untested. |
+| Quality coverage | 5 | Ten checks cover lifecycle, host enforcement, policy, failure, and cancellation paths; live model grounding remains untested. |
 | Security and RAI | 5 | Read-only synthetic data, strict IDs, fail-closed output, no secrets, and human ownership. |
 | Ceremony efficiency | 2 | Architecture quality was high, but implementation started well after the Full-Mode target. |
 | Recovery behavior | 5 | The coordinator timeboxed work, added tooling, adapted the SDK target, and produced a runnable fallback. |

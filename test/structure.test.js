@@ -42,7 +42,10 @@ test('routing and ceremonies enforce Foundry gates', () => {
   const ceremonies = read('.squad', 'ceremonies.md');
   const responseMode = read('.github', 'skills', 'coordinator-response-mode', 'SKILL.md');
   const qualityCharter = read('.squad', 'agents', 'quality-engineer', 'charter.md');
+  const reviewerCharter = read('.squad', 'agents', 'reviewer', 'charter.md');
   const evaluationTemplate = read('.squad', 'artifacts', 'templates', 'evaluation.md');
+  const requirementsTemplate = read('.squad', 'artifacts', 'templates', 'requirements.md');
+  const architectureTemplate = read('.squad', 'artifacts', 'templates', 'architecture-decision.md');
   assert.match(routing, /Foundry Delivery Route/);
   assert.match(routing, /No false unavailable/);
   assert.match(routing, /launches implementation within 60 seconds/);
@@ -52,6 +55,11 @@ test('routing and ceremonies enforce Foundry gates', () => {
   assert.match(qualityCharter, /offline deterministic[\s\S]*authenticated environment smoke[\s\S]*observed runtime/i);
   assert.match(qualityCharter, /NOT_EVIDENCED/);
   assert.match(evaluationTemplate, /Authenticated environment smoke tests/);
+  assert.match(reviewerCharter, /agent request[\s\S]*host dispatch[\s\S]*typed tool result[\s\S]*final response/i);
+  assert.match(reviewerCharter, /allowlist[\s\S]*side-effect class[\s\S]*exact request binding/i);
+  assert.match(requirementsTemplate, /Advisory vs action-taking/);
+  assert.match(requirementsTemplate, /Allowed side effects/);
+  assert.match(architectureTemplate, /Tool execution location and service reachability/);
   assert.equal((ceremonies.match(/\*\*Exit criteria:\*\*/g) || []).length, 2);
   for (const dimension of ['catalog presence', 'compatibility', 'regional availability', 'entitlement', 'quota', 'capacity', 'deployability', 'runtime health']) {
     assert.match(`${routing}\n${ceremonies}`.toLowerCase(), new RegExp(dimension));

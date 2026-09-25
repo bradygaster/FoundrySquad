@@ -7,7 +7,7 @@ The lab produced three integrated, local-first samples:
 | Scenario | Sample | Offline validation | Authenticated Foundry status |
 | --- | --- | --- | --- |
 | Direct model / Model Router | [`model-routing-advisor`](../../samples/model-routing-advisor/README.md) | 8/8 tests passed | Adapter included; target environment not evidenced |
-| Tool-using agent | [`change-risk-agent`](../../samples/change-risk-agent/README.md) | 5/5 checks passed | Adapter boundary documented; runtime not evidenced |
+| Tool-using agent | [`change-risk-agent`](../../samples/change-risk-agent/README.md) | 10/10 checks passed | Adapter boundary documented; runtime not evidenced |
 | Grounded knowledge | [`permission-aware-knowledge`](../../samples/permission-aware-knowledge/README.md) | 4/4 evaluations passed | Adapter included; Foundry IQ/model runtime not evidenced |
 
 All three experiment journals pass the shared validator. Repository tests pass
@@ -44,8 +44,10 @@ typed allowlisted contract, separated advisory output from deployment authority,
 and explicitly rejected Hosted Agent, Prompt Agent, multi-agent orchestration,
 OpenAPI deployment, MCP, code execution, search/IQ, Toolbox, and local inference.
 That reasoning directly shaped the integrated fail-closed implementation and test
-matrix. The cost was several minutes of ceremony and an initially nonstandard
-journal.
+matrix. A late Reviewer finding also caught that the first fallback called the
+repository before an agent requested a tool; the final sample now exposes the
+agent request, exact host dispatch, typed tool result, and final response lifecycle.
+The cost was several minutes of ceremony and an initially nonstandard journal.
 
 ### Grounded knowledge
 

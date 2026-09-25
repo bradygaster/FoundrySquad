@@ -1,10 +1,11 @@
 # Change Risk Advisor
 
 A local-first .NET console sample showing the smallest useful tool-using agent
-shape: one advisory host, one typed read-only tool, and one bounded request.
+shape: an observable agent request, host-validated dispatch to one typed read-only
+tool, a tool-result continuation, and one final advisory.
 
-The checked-in deterministic model makes the default sample and tests network-free.
-The seam represented by `IAdvisoryModel` is where a Microsoft Foundry Responses
+The checked-in deterministic agent makes the default sample and tests network-free.
+The seam represented by `IAdvisoryAgent` is where a Microsoft Foundry Responses
 API or Agent Framework adapter can be added after current package, model, region,
 quota, capacity, and runtime support are verified.
 
@@ -23,10 +24,11 @@ dotnet run --project src/ChangeRiskAgent -- CHG-9999
 dotnet run --project tests/ChangeRiskAgent.Tests
 ```
 
-The tests prove input validation, exact fixture lookup, safe missing-evidence
-behavior, conservative risk policy, human ownership, and cancellation. They do
-not prove Microsoft Foundry model/tool compatibility or authenticated runtime
-behavior.
+The tests prove input validation, exact fixture lookup, observable request/tool/
+result/final lifecycle, allowlisted dispatch, exact request binding, a one-call
+limit, safe missing-evidence behavior, conservative risk policy, human ownership,
+and cancellation. They do not prove Microsoft Foundry model/tool compatibility
+or authenticated runtime behavior.
 
 ## Foundry integration boundary
 

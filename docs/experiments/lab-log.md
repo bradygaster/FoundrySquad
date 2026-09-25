@@ -91,7 +91,7 @@ The lab is complete only when:
 - Preserved the unmerged Squad-led grounded-knowledge process evidence at
   `87e02beefe6a5e8d80a5749e302c65ac7318f4b0`.
 - Final validation passed: repository 42/42, model routing 8/8, grounded
-  knowledge 4/4, tool agent 5/5, and all three journals passed.
+  knowledge 4/4, tool agent 10/10, and all three journals passed.
 - Applied core fixes for implementation timeboxing, durable checkpoints,
   executable experiment tracking, and explicit evidence lanes.
 - Authenticated Foundry runtime evidence remains `NOT_EVIDENCED` because no

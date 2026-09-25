@@ -42,22 +42,69 @@ await Check("cancellation stops the tool loop", async () =>
     {
     }
 });
+await Check("agent lifecycle dispatches one bound tool call", async () =>
+{
+    var agent = new RecordingAgent();
+    var result = await Advisor(agent).AssessAsync("CHG-1001", CancellationToken.None);
+    Expect(agent.StartCount == 1, "Expected one agent request.");
+    Expect(agent.ContinueCount == 1, "Expected one tool-result continuation.");
+    Expect(agent.LastResult?.ChangeId == "CHG-1001", "Expected the bound tool result.");
+    Expect(result.Contains("Classification: low", StringComparison.Ordinal), result);
+});
+await Check("non-allowlisted tool is rejected", async () =>
+{
+    await ExpectInvalidOperation(new ScriptedAgent(
+        AgentTurn.CallTool("deploy_change", "CHG-1001"),
+        AgentTurn.Complete("should not run")));
+});
+await Check("tool arguments must match the user request", async () =>
+{
+    await ExpectInvalidOperation(new ScriptedAgent(
+        AgentTurn.CallTool("get_change_record", "CHG-1002"),
+        AgentTurn.Complete("should not run")));
+});
+await Check("a second tool call exceeds the iteration limit", async () =>
+{
+    await ExpectInvalidOperation(new ScriptedAgent(
+        AgentTurn.CallTool("get_change_record", "CHG-1001"),
+        AgentTurn.CallTool("get_change_record", "CHG-1001")));
+});
+await Check("agent cannot answer before retrieving evidence", async () =>
+{
+    await ExpectInvalidOperation(new ScriptedAgent(
+        AgentTurn.Complete("approve the change"),
+        AgentTurn.Complete("should not run")));
+});
 
 if (failures.Count > 0)
 {
     Console.Error.WriteLine(string.Join(Environment.NewLine, failures));
     return 1;
 }
-Console.WriteLine("PASS: 5 change-risk-agent checks");
+Console.WriteLine("PASS: 10 change-risk-agent checks");
 return 0;
 
-ChangeRiskAdvisor Advisor()
+ChangeRiskAdvisor Advisor(IAdvisoryAgent? agent = null)
 {
     var dataPath = Path.GetFullPath(Path.Combine(
         AppContext.BaseDirectory,
         "..", "..", "..", "..", "..",
         "src", "ChangeRiskAgent", "Data", "change-requests.json"));
-    return new ChangeRiskAdvisor(new ChangeRecordTool(dataPath), new DeterministicAdvisoryModel());
+    return new ChangeRiskAdvisor(
+        new ChangeRecordTool(dataPath),
+        agent ?? new DeterministicAdvisoryModel());
+}
+
+async Task ExpectInvalidOperation(IAdvisoryAgent agent)
+{
+    try
+    {
+        await Advisor(agent).AssessAsync("CHG-1001", CancellationToken.None);
+        throw new Exception("Expected the host to reject the agent turn.");
+    }
+    catch (InvalidOperationException)
+    {
+    }
 }
 
 async Task Check(string name, Func<Task> action)
@@ -75,4 +122,41 @@ async Task Check(string name, Func<Task> action)
 static void Expect(bool condition, string message)
 {
     if (!condition) throw new Exception(message);
+}
+
+sealed class RecordingAgent : IAdvisoryAgent
+{
+    private readonly DeterministicAdvisoryModel inner = new();
+
+    public int StartCount { get; private set; }
+    public int ContinueCount { get; private set; }
+    public ToolResult? LastResult { get; private set; }
+
+    public async Task<AgentTurn> StartAsync(string changeId, CancellationToken cancellationToken)
+    {
+        StartCount += 1;
+        return await inner.StartAsync(changeId, cancellationToken);
+    }
+
+    public async Task<AgentTurn> ContinueAsync(
+        ToolCallRequest request,
+        ToolResult result,
+        CancellationToken cancellationToken)
+    {
+        ContinueCount += 1;
+        LastResult = result;
+        return await inner.ContinueAsync(request, result, cancellationToken);
+    }
+}
+
+sealed class ScriptedAgent(AgentTurn first, AgentTurn second) : IAdvisoryAgent
+{
+    public Task<AgentTurn> StartAsync(string changeId, CancellationToken cancellationToken) =>
+        Task.FromResult(first);
+
+    public Task<AgentTurn> ContinueAsync(
+        ToolCallRequest request,
+        ToolResult result,
+        CancellationToken cancellationToken) =>
+        Task.FromResult(second);
 }
