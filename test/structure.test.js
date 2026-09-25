@@ -70,9 +70,13 @@ test('developer docs schema doctor scenarios and runner exist', () => {
   for (const path of [
     ['README.md'],
     ['docs', 'foundry-squad.md'],
+    ['docs', 'experiments', 'README.md'],
+    ['docs', 'experiments', 'scenario-journal-template.md'],
     ['schemas', 'foundry-availability-result.schema.json'],
     ['scripts', 'foundry-doctor.js'],
     ['scripts', 'run-foundry-squad-evals.js'],
+    ['scripts', 'validate-experiment-journal.js'],
+    ['scripts', 'summarize-experiment-journals.js'],
     ['test', 'fixtures', 'scenarios.json']
   ]) assert.ok(existsSync(join(ROOT, ...path)), `missing ${path.join('/')}`);
   const scenarios = JSON.parse(read('test', 'fixtures', 'scenarios.json'));
