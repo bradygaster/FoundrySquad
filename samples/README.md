@@ -24,7 +24,7 @@ Every integrated sample must:
 | Scenario | Intended lesson | Integration status |
 | --- | --- | --- |
 | Model routing | Start with direct invocation; add deterministic routing only when request variation earns it. | In progress |
-| Tool-using agent | Use one read-only, typed tool and fail closed before adding hosted or multi-agent infrastructure. | In progress |
+| Tool-using agent | Use one read-only, typed tool and fail closed before adding hosted or multi-agent infrastructure. | [`change-risk-agent`](change-risk-agent/README.md) |
 | Grounded knowledge | Enforce permission filtering before ranking or generation, and cite only retrieved evidence. | In progress |
 
 Authenticated availability, quota, capacity, deployment, and runtime behavior are

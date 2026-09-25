@@ -1,0 +1,16 @@
+/Users/bradyg/src/copilot-app-repos/copilot-worktrees/FoundrySquad/bradygaster-sturdy-potato/samples/change-risk-agent/src/ChangeRiskAgent/bin/Debug/net10.0/Data/change-requests.json
+/Users/bradyg/src/copilot-app-repos/copilot-worktrees/FoundrySquad/bradygaster-sturdy-potato/samples/change-risk-agent/src/ChangeRiskAgent/bin/Debug/net10.0/ChangeRiskAgent
+/Users/bradyg/src/copilot-app-repos/copilot-worktrees/FoundrySquad/bradygaster-sturdy-potato/samples/change-risk-agent/src/ChangeRiskAgent/bin/Debug/net10.0/ChangeRiskAgent.deps.json
+/Users/bradyg/src/copilot-app-repos/copilot-worktrees/FoundrySquad/bradygaster-sturdy-potato/samples/change-risk-agent/src/ChangeRiskAgent/bin/Debug/net10.0/ChangeRiskAgent.runtimeconfig.json
+/Users/bradyg/src/copilot-app-repos/copilot-worktrees/FoundrySquad/bradygaster-sturdy-potato/samples/change-risk-agent/src/ChangeRiskAgent/bin/Debug/net10.0/ChangeRiskAgent.dll
+/Users/bradyg/src/copilot-app-repos/copilot-worktrees/FoundrySquad/bradygaster-sturdy-potato/samples/change-risk-agent/src/ChangeRiskAgent/bin/Debug/net10.0/ChangeRiskAgent.pdb
+/Users/bradyg/src/copilot-app-repos/copilot-worktrees/FoundrySquad/bradygaster-sturdy-potato/samples/change-risk-agent/src/ChangeRiskAgent/obj/Debug/net10.0/ChangeRiskAgent.GeneratedMSBuildEditorConfig.editorconfig
+/Users/bradyg/src/copilot-app-repos/copilot-worktrees/FoundrySquad/bradygaster-sturdy-potato/samples/change-risk-agent/src/ChangeRiskAgent/obj/Debug/net10.0/ChangeRiskAgent.AssemblyInfoInputs.cache
+/Users/bradyg/src/copilot-app-repos/copilot-worktrees/FoundrySquad/bradygaster-sturdy-potato/samples/change-risk-agent/src/ChangeRiskAgent/obj/Debug/net10.0/ChangeRiskAgent.AssemblyInfo.cs
+/Users/bradyg/src/copilot-app-repos/copilot-worktrees/FoundrySquad/bradygaster-sturdy-potato/samples/change-risk-agent/src/ChangeRiskAgent/obj/Debug/net10.0/ChangeRiskAgent.csproj.CoreCompileInputs.cache
+/Users/bradyg/src/copilot-app-repos/copilot-worktrees/FoundrySquad/bradygaster-sturdy-potato/samples/change-risk-agent/src/ChangeRiskAgent/obj/Debug/net10.0/ChangeRiskAgent.sourcelink.json
+/Users/bradyg/src/copilot-app-repos/copilot-worktrees/FoundrySquad/bradygaster-sturdy-potato/samples/change-risk-agent/src/ChangeRiskAgent/obj/Debug/net10.0/ChangeRiskAgent.dll
+/Users/bradyg/src/copilot-app-repos/copilot-worktrees/FoundrySquad/bradygaster-sturdy-potato/samples/change-risk-agent/src/ChangeRiskAgent/obj/Debug/net10.0/refint/ChangeRiskAgent.dll
+/Users/bradyg/src/copilot-app-repos/copilot-worktrees/FoundrySquad/bradygaster-sturdy-potato/samples/change-risk-agent/src/ChangeRiskAgent/obj/Debug/net10.0/ChangeRiskAgent.pdb
+/Users/bradyg/src/copilot-app-repos/copilot-worktrees/FoundrySquad/bradygaster-sturdy-potato/samples/change-risk-agent/src/ChangeRiskAgent/obj/Debug/net10.0/ChangeRiskAgent.genruntimeconfig.cache
+/Users/bradyg/src/copilot-app-repos/copilot-worktrees/FoundrySquad/bradygaster-sturdy-potato/samples/change-risk-agent/src/ChangeRiskAgent/obj/Debug/net10.0/ref/ChangeRiskAgent.dll
