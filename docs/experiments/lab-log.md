@@ -37,6 +37,14 @@ journal.
 - The parent coordinator sent all three sessions an implementation timebox:
   choose a deterministic local-first seam, start code immediately, and document
   cloud validation as pending rather than blocking on credentials.
+- The original grounded-knowledge Squad crossed its architecture gate after the
+  timebox and selected a local-first .NET permission-aware knowledge sample.
+- The original model-routing Squad remained busy for more than five minutes
+  without a durable artifact.
+- Recovery launched two narrowly scoped implementation-owner worktrees for model
+  routing and grounded knowledge. These are treated as direct-implementation
+  controls, not replacement Squad sessions, so the lab can compare artifact
+  quality and elapsed ceremony against the Squad-led branches.
 
 ### Preliminary core observations
 
@@ -51,6 +59,9 @@ These are hypotheses until the completed journals provide cross-scenario evidenc
 4. **Cloud evidence should not block local implementation.** The coordinator
    needed to restate that authenticated Foundry gaps remain explicit follow-up
    evidence rather than prerequisites for deterministic code and tests.
+5. **A direct implementation control is useful.** Comparing a tightly specified
+   coding owner with Full-Mode Squad delivery can reveal whether extra ceremony
+   changes architecture quality, safety, test coverage, or only elapsed time.
 
 ### Completion conditions
 
