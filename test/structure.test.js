@@ -77,6 +77,7 @@ test('developer docs schema doctor scenarios and runner exist', () => {
     ['docs', 'experiments', 'README.md'],
     ['docs', 'experiments', 'lab-log.md'],
     ['docs', 'experiments', 'scenario-journal-template.md'],
+    ['samples', 'README.md'],
     ['schemas', 'foundry-availability-result.schema.json'],
     ['scripts', 'foundry-doctor.js'],
     ['scripts', 'run-foundry-squad-evals.js'],

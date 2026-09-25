@@ -12,7 +12,8 @@ The [Foundry Sample Lab](docs/experiments/README.md) uses isolated local
 worktrees and separate Squad sessions to build deep samples for model routing,
 tool-using agents, and grounded knowledge. Each sample records which specialists
 contributed, the evidence and validation produced, workflow friction, and
-actionable improvements to the core FoundrySquad configuration.
+actionable improvements to the core FoundrySquad configuration. Integrated sample
+applications live under [`samples/`](samples/README.md).
 
 ## Mission and operating philosophy
 
