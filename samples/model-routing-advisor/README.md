@@ -4,7 +4,7 @@
 > resource, identity, endpoint, request, or response identifiers. Real mode
 > requires caller-supplied environment configuration.
 
-A compact .NET 8 console sample that deterministically selects either a low-cost
+A compact .NET 10 console sample that deterministically selects either a low-cost
 or high-capability model path. The default experience is fully local: it uses a
 fake transport, requires no cloud account, and makes no network calls at runtime.
 
@@ -25,6 +25,7 @@ so routing is repeatable, inspectable, and free in the local path.
 
 ## Local validation
 
+Prerequisite: .NET SDK `10.0.301`, as pinned by the repository `global.json`.
 From this sample directory:
 
 ```bash

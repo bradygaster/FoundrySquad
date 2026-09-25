@@ -6,7 +6,7 @@
 
 ## Outcome and acceptance criteria
 
-Implemented `samples/model-routing-advisor/` as a .NET 8 console sample with:
+Implemented `samples/model-routing-advisor/` as a .NET 10 console sample with:
 
 - deterministic selection between low-cost and high-capability paths;
 - an injectable transport boundary and fake offline transport;
@@ -87,8 +87,8 @@ response body containing user data was persisted.
 
 | Validation | Expected evidence | Result |
 |---|---|---|
-| Restore/build | .NET 8 projects restore and compile without credentials | Passed: 0 warnings, 0 errors |
-| Targeted tests | Routing, endpoint normalization, token audience, retry, timeout, and error behavior pass offline | Passed: 10 tests, 0 failed, 0 skipped; tests ran on the available .NET 10 runtime while the product project remained `net8.0` |
+| Restore/build | .NET 10 projects restore and compile without credentials | Passed: 0 warnings, 0 errors |
+| Targeted tests | Routing, endpoint normalization, token audience, retry, timeout, and error behavior pass offline | Passed: 10 tests, 0 failed, 0 skipped on .NET SDK 10.0.301 |
 | Low-cost local route | Short prompt selects `LowCost` and fake model | Passed: score 0, one attempt, `offline-low-cost` |
 | High-capability local route | Complex prompt selects `HighCapability` and fake model | Passed: score 6, one attempt, `offline-high-capability` |
 | Authenticated low-cost route | `gpt-5-mini` responds through `DefaultAzureCredential` and the project Responses API | Passed: one attempt, sanitized response `ROUTE_LOW_OK` |
@@ -102,10 +102,10 @@ owner recovered with the smallest complete control: a deterministic policy,
 transport abstraction, offline fake, narrow credential-based real transport,
 tests, and explicit uncertainty boundaries.
 
-The worktree had only the .NET 10 SDK/runtime. The `net8.0` product built, but
-the .NET 8 testhost could not start, so the unchanged test sources were
-temporarily built and run as `net10.0`, then restored to `net8.0`; all ten tests
-passed. Initial live attempts exposed two integration defects: relative URI
+The original worktree had only the .NET 10 SDK/runtime, so the initial .NET 8
+testhost could not start. The integrated product and test projects now target
+`net10.0` directly and all ten tests pass without a roll-forward workaround.
+Initial live attempts exposed two integration defects: relative URI
 resolution dropped the project name and returned HTTP 404, then the legacy
 chat-completions path returned HTTP 400. Endpoint normalization and the project
 Responses API corrected both defects. The low-cost route passed immediately.
@@ -147,7 +147,7 @@ validated the failure contract and the successful compiled high-capability path.
 | Routing accuracy | 3 | The initial Squad route selected the right domains but did not produce a reusable artifact before recovery. |
 | Handoff quality | 2 | The implementation owner received intent but no durable architecture decision from the parallel Squad session. |
 | Evidence discipline | 5 | Local, successful live, and rate-limited live outcomes are separately recorded with anonymized resource and request identifiers. |
-| Implementation usefulness | 5 | The .NET 8 sample includes offline defaults, an opt-in Foundry transport, resilience, CLI examples, and tests. |
+| Implementation usefulness | 5 | The .NET 10 sample includes offline defaults, an opt-in Foundry transport, resilience, CLI examples, and tests. |
 | Quality coverage | 5 | Ten tests cover routing thresholds, endpoint normalization, token audience, transport injection, retries, timeout behavior, and error categories. |
 | Security and RAI | 5 | The sample uses `DefaultAzureCredential`, validates configuration, avoids secrets, bounds retries, and performs advisory triage only. |
 | Ceremony efficiency | 2 | More than five minutes elapsed without a durable Squad artifact before the direct-owner recovery. |

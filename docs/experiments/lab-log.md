@@ -54,8 +54,9 @@ journal.
 - The grounded-knowledge direct control completed at commit
   `951984288b1aad5f80d9399c5717d29785b8b033` with a .NET 8 permission-aware
   retrieval sample, 4/4 offline evaluations, a clean release build, and an
-  optional authenticated Foundry adapter boundary. It explicitly recorded the
-  delayed Squad artifact as the recovery trigger.
+  optional authenticated Foundry adapter boundary. The integrated copy now
+  targets .NET 10. It explicitly recorded the delayed Squad artifact as the
+  recovery trigger.
 
 ### Preliminary core observations
 
