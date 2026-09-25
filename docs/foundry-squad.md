@@ -2,11 +2,13 @@
 
 ## What this repository provides
 
-The Squad has six specialists:
+The Squad has eight specialists:
 
 - **Architect** chooses the smallest sufficient architecture.
 - **Model Strategist** gathers current, environment-aware model and deployment evidence.
-- **Foundry Engineer** implements supported application surfaces.
+- **Agent Engineer** implements direct model calls, Model Router, Responses API agents, Prompt/Hosted Agents, and Microsoft Agent Framework orchestration.
+- **Integration Engineer** implements Toolbox, Foundry Tools, and Foundry Skills.
+- **Knowledge Engineer** implements Foundry IQ and governed, permission-aware knowledge retrieval.
 - **Platform Engineer** owns identity, infrastructure, deployment, and operations.
 - **Quality Engineer** defines and runs repeatable AI evaluations and observability checks.
 - **Reviewer** challenges complexity, stale assumptions, unsupported shortcuts, weak identity, and missing evidence.
@@ -28,7 +30,7 @@ The team writes durable artifacts from `.squad/artifacts/templates/`. It first d
 
 ## Workflow and gates
 
-1. **Requirements:** Architect records constraints and acceptance criteria.
+1. **Requirements:** Architect records constraints and acceptance criteria, using `.squad/skills/foundry-jtbd-routing/SKILL.md` for a fast first pass from stated customer goal to Foundry capability.
 2. **Architecture:** Architect identifies the smallest sufficient design. The architecture gate challenges unnecessary agents, RAG, tools, infrastructure, and custom orchestration.
 3. **Current evidence:** Model Strategist uses `.squad/skills/foundry-availability/SKILL.md`. A documentation claim is not a subscription deployability claim.
 4. **Build in parallel:** after contracts are stable, application, `azd`/Bicep infrastructure, and evaluation work may proceed together.

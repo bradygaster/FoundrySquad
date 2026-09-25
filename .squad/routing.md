@@ -8,7 +8,9 @@ How to decide who handles what.
 |-----------|----------|----------|
 | Requirements and architecture | Architect | Smallest sufficient architecture, direct model vs agent, Prompt vs Hosted Agent |
 | Models and availability | Model Strategist | Model Router, capabilities, regions, quota, capacity, deployment types |
-| Foundry application code | Foundry Engineer | SDK integration, agents, tools, IQ, Toolbox, Skills, application tests |
+| Model/agent orchestration | Agent Engineer | Direct model calls, Model Router integration, Responses API agents, Prompt Agents, Hosted Agents, Agent Framework, application tests |
+| Tools, Toolbox, and Skills | Integration Engineer | Toolbox, Foundry Tools (search, code execution, OpenAPI, MCP, agent-to-agent), Foundry Skills |
+| Knowledge and grounding | Knowledge Engineer | Foundry IQ, governed knowledge retrieval, permission-aware grounding, RAG evaluation |
 | Environment and deployment | Platform Engineer | DevPack, `azd`, IaC, Entra ID, managed identity, RBAC, CI/CD |
 | AI quality and observability | Quality Engineer | Evaluation datasets, rubrics, evaluators, tracing, acceptance thresholds |
 | Architecture and implementation review | Reviewer | Complexity challenge, supportability, security defaults, eval and operations gates |
@@ -44,10 +46,10 @@ here only when their agent names also exist in the casting registry.
 
 ## Foundry Delivery Route
 
-1. **Requirements before selection** — Architect produces a requirements artifact before model, agent, region, or hosting choices.
+1. **Requirements before selection** — Architect produces a requirements artifact before model, agent, region, or hosting choices, consulting `.squad/skills/foundry-jtbd-routing/SKILL.md` for a fast first pass from stated customer goal to Foundry capability.
 2. **Current evidence before commitment** — Model Strategist and Fact Checker verify volatile claims. Documentation can establish capability, but authenticated environment evidence is required for subscription-specific deployability.
 3. **Architecture gate before build** — Reviewer challenges no-AI/direct invocation, Model Router, Responses API ephemeral agent, Prompt Agent, Hosted Agent, Agent Framework, IQ, Toolbox, Skills, Tools, and local alternatives as applicable.
-4. **Parallel implementation after contracts** — Foundry Engineer, Platform Engineer, and Quality Engineer may proceed in parallel only after inputs, outputs, and acceptance thresholds are explicit.
+4. **Parallel implementation after contracts** — Agent Engineer, Integration Engineer, Knowledge Engineer, Platform Engineer, and Quality Engineer may proceed in parallel only after inputs, outputs, and acceptance thresholds are explicit.
 5. **No false unavailable** — authorization, not-found, throttling, service failures, and empty discovery results route back to evidence gathering; they are not availability conclusions.
 6. **Pre-ship gate** — completion requires application tests, infrastructure evidence, evaluation thresholds, operations evidence, secretless identity review, and Reviewer approval.
 

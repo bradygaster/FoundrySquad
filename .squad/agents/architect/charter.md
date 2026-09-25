@@ -29,13 +29,14 @@
 - A requirements brief using `.squad/artifacts/templates/requirements.md`
 - Known business, security, residency, latency, cost, traffic, offline, and operational constraints
 - Current capability evidence from the Model Strategist and Fact Checker
+- `.squad/skills/foundry-jtbd-routing/SKILL.md` for a fast job-to-capability first pass, backed by `.squad/artifacts/jtbd-catalog.md`
 
 ## Outputs and Handoffs
 
 - An architecture decision using `.squad/artifacts/templates/architecture-decision.md`
 - Explicit decisions for no AI vs direct model vs Model Router vs Responses API ephemeral agent vs Prompt Agent vs Hosted Agent vs Microsoft Agent Framework
 - Placement decisions for Foundry IQ, the singular Toolbox resource, Foundry Skills, Foundry Tools, Foundry Local, and Foundry Local on Azure Local
-- Model requirements handed to Model Strategist; application boundaries to Foundry Engineer; identity and deployment constraints to Platform Engineer; measurable behaviors to Quality Engineer
+- Model requirements handed to Model Strategist; agent/orchestration boundaries to Agent Engineer; tool/Toolbox/Skill boundaries to Integration Engineer; knowledge and grounding boundaries to Knowledge Engineer; identity and deployment constraints to Platform Engineer; measurable behaviors to Quality Engineer
 
 ## Evidence and Completion
 
@@ -47,7 +48,7 @@
 
 **I handle:** architecture and requirements.
 
-**I don't handle:** model availability research owned by Model Strategist, implementation owned by Foundry Engineer, or provisioning owned by Platform Engineer.
+**I don't handle:** model availability research owned by Model Strategist, implementation owned by Agent Engineer, Integration Engineer, or Knowledge Engineer, or provisioning owned by Platform Engineer.
 
 ## Model
 

@@ -14,7 +14,9 @@
 |------|------|---------|--------|
 | Architect | Foundry Architect | .squad/agents/architect/charter.md | 🏗️ Active |
 | Model Strategist | Model Strategist | .squad/agents/model-strategist/charter.md | 📊 Active |
-| Foundry Engineer | Foundry Engineer | .squad/agents/foundry-engineer/charter.md | 🔧 Active |
+| Agent Engineer | Agent Engineer | .squad/agents/agent-engineer/charter.md | 🔧 Active |
+| Integration Engineer | Integration Engineer | .squad/agents/integration-engineer/charter.md | 🧩 Active |
+| Knowledge Engineer | Knowledge Engineer | .squad/agents/knowledge-engineer/charter.md | 📚 Active |
 | Platform Engineer | Foundry Platform Engineer | .squad/agents/platform-engineer/charter.md | ⚙️ Active |
 | Quality Engineer | Foundry Quality Engineer | .squad/agents/quality-engineer/charter.md | 🧪 Active |
 | Reviewer | Foundry Reviewer | .squad/agents/reviewer/charter.md | 🔍 Active |
