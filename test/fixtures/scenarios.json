@@ -1,0 +1,150 @@
+[
+  {
+    "id": "A",
+    "name": "Simple summarization service",
+    "prompt": "Build an API that summarizes supplied text.",
+    "concepts": [
+      { "name": "direct-model", "signals": ["direct model", "model invocation", "call the model", "no agent", "without an agent"] },
+      { "name": "challenge-agent", "signals": ["agent is unnecessary", "does not need an agent", "avoid an agent", "agent adds no value"] }
+    ],
+    "requiredStances": [
+      { "name": "recommend-direct-model", "polarity": "support", "targets": ["direct model", "model invocation", "model call"] }
+    ]
+  },
+  {
+    "id": "B",
+    "name": "Variable-complexity chat",
+    "prompt": "Build a general-purpose assistant where some requests are trivial and some require sophisticated reasoning. Cost matters.",
+    "concepts": [
+      { "name": "model-router", "signals": ["model router", "route between models", "dynamic model selection"] },
+      { "name": "cost-quality", "signals": ["cost and quality", "quality cost tradeoff", "cost-quality"] }
+    ],
+    "requiredStances": [
+      { "name": "evaluate-model-router", "polarity": "support", "targets": ["model router", "dynamic model selection"] }
+    ],
+    "forbiddenStances": [
+      { "name": "reject-model-router", "polarity": "reject", "targets": ["model router", "dynamic model selection"] }
+    ]
+  },
+  {
+    "id": "C",
+    "name": "Declarative tool assistant",
+    "prompt": "Build an assistant with well-defined instructions and a few supported tools.",
+    "concepts": [
+      { "name": "prompt-agent", "signals": ["prompt agent", "declarative agent"] },
+      { "name": "before-hosted", "signals": ["before hosted", "instead of hosted", "hosted agent is unnecessary", "avoid custom runtime", "avoid a custom runtime"] }
+    ],
+    "requiredStances": [
+      { "name": "recommend-prompt-agent", "polarity": "support", "targets": ["prompt agent", "declarative agent", "declarative option"] }
+    ],
+    "forbiddenStances": [
+      { "name": "reject-prompt-agent", "polarity": "reject", "targets": ["prompt agent", "declarative agent", "declarative option"] }
+    ]
+  },
+  {
+    "id": "D",
+    "name": "Custom orchestration",
+    "prompt": "Build an agent requiring custom code, complex orchestration, custom dependencies, and specialized runtime behavior.",
+    "concepts": [
+      { "name": "hosted-agent", "signals": ["hosted agent", "foundry hosted"] },
+      { "name": "agent-framework", "signals": ["microsoft agent framework", "agent framework"] }
+    ],
+    "requiredStances": [
+      { "name": "evaluate-hosted-agent", "polarity": "support", "targets": ["hosted agent", "foundry hosted"] }
+    ],
+    "forbiddenStances": [
+      { "name": "reject-hosted-agent", "polarity": "reject", "targets": ["hosted agent", "foundry hosted"] }
+    ]
+  },
+  {
+    "id": "E",
+    "name": "Enterprise knowledge",
+    "prompt": "Build an internal assistant that answers questions using organizational knowledge while respecting enterprise permissions.",
+    "concepts": [
+      { "name": "foundry-iq", "signals": ["foundry iq"] },
+      { "name": "avoid-bespoke-rag", "signals": ["before custom rag", "avoid bespoke rag", "do not build a custom rag", "instead of custom retrieval"] }
+    ],
+    "requiredStances": [
+      { "name": "evaluate-foundry-iq", "polarity": "support", "targets": ["foundry iq"] }
+    ],
+    "forbiddenStances": [
+      { "name": "reject-foundry-iq", "polarity": "reject", "targets": ["foundry iq"] }
+    ]
+  },
+  {
+    "id": "F",
+    "name": "Shared tools",
+    "prompt": "Several agents need access to the same company capabilities.",
+    "concepts": [
+      { "name": "toolbox", "signals": ["toolbox"] },
+      { "name": "reuse", "signals": ["shared tool", "centralized tool", "avoid duplicating", "reusable capability"] }
+    ],
+    "requiredStances": [
+      { "name": "recommend-toolbox", "polarity": "support", "targets": ["toolbox"] }
+    ],
+    "forbiddenStances": [
+      { "name": "reject-toolbox", "polarity": "reject", "targets": ["toolbox"] }
+    ]
+  },
+  {
+    "id": "G",
+    "name": "Reusable behavior",
+    "prompt": "Multiple agents require the same specialized procedure and instructions.",
+    "concepts": [
+      { "name": "foundry-skill", "signals": ["foundry skill", "reusable skill", "create a skill"] },
+      { "name": "avoid-duplication", "signals": ["avoid duplicating", "shared procedure", "reuse the procedure"] }
+    ],
+    "requiredStances": [
+      { "name": "recommend-foundry-skill", "polarity": "support", "targets": ["foundry skill", "reusable skill"] }
+    ],
+    "forbiddenStances": [
+      { "name": "reject-foundry-skill", "polarity": "reject", "targets": ["foundry skill", "reusable skill"] }
+    ]
+  },
+  {
+    "id": "H",
+    "name": "Region constrained deployment",
+    "prompt": "Deploy an application using model X in an allowed US region.",
+    "concepts": [
+      { "name": "live-discovery", "signals": ["live discovery", "query arm", "authenticated discovery", "verify against the subscription"] },
+      { "name": "separate-dimensions", "signals": ["quota and capacity", "availability quota capacity", "catalog compatibility quota capacity", "regional availability"] },
+      { "name": "no-static", "signals": ["not rely on static", "do not assume the region", "avoid a static matrix", "cannot determine from memory"] }
+    ],
+    "requiredStances": [
+      { "name": "require-live-discovery", "polarity": "support", "targets": ["live discovery", "authenticated discovery", "subscription"] }
+    ],
+    "evidenceThreshold": 3
+  },
+  {
+    "id": "I",
+    "name": "Offline application",
+    "prompt": "Build an AI application that must continue operating without network connectivity.",
+    "concepts": [
+      { "name": "foundry-local", "signals": ["foundry local"] },
+      { "name": "offline-fit", "signals": ["offline", "on-device", "without network", "local inference"] }
+    ],
+    "requiredStances": [
+      { "name": "evaluate-foundry-local", "polarity": "support", "targets": ["foundry local"] }
+    ],
+    "forbiddenStances": [
+      { "name": "reject-foundry-local", "polarity": "reject", "targets": ["foundry local"] }
+    ]
+  },
+  {
+    "id": "J",
+    "name": "Overengineered request",
+    "prompt": "Create five agents that collaborate to summarize a paragraph.",
+    "concepts": [
+      { "name": "challenge-multi-agent", "signals": ["does not justify multiple agents", "avoid multi-agent", "five agents are unnecessary", "single model call", "direct model invocation"] },
+      { "name": "simplest", "signals": ["simplest architecture", "smaller solution", "unnecessary complexity", "overengineered"] }
+    ],
+    "requiredStances": [
+      { "name": "reject-five-agents", "polarity": "reject", "targets": ["five agents", "five agent", "multi agent", "multiple agents"] },
+      { "name": "recommend-direct-model", "polarity": "support", "targets": ["direct model", "model invocation", "model call", "single model call"] }
+    ],
+    "forbiddenStances": [
+      { "name": "endorse-five-agents", "polarity": "support", "targets": ["five agents", "five agent", "multi agent", "multiple agents"] }
+    ],
+    "hardFailureSignals": ["use five agents", "create five agents", "multi-agent is the best", "recommend five agents"]
+  }
+]

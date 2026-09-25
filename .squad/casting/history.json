@@ -1,0 +1,23 @@
+{
+  "universe_usage_history": [
+    {
+      "universe": "descriptive",
+      "assignment_id": "foundry-squad-init-2026-09-25",
+      "used_at": "2026-09-24T21:12:49.359-07:00"
+    }
+  ],
+  "assignment_cast_snapshots": {
+    "foundry-squad-init-2026-09-25": {
+      "universe": "descriptive",
+      "agents": {
+        "architect": "Architect",
+        "model-strategist": "Model Strategist",
+        "foundry-engineer": "Foundry Engineer",
+        "platform-engineer": "Platform Engineer",
+        "quality-engineer": "Quality Engineer",
+        "reviewer": "Reviewer"
+      },
+      "created_at": "2026-09-24T21:12:49.359-07:00"
+    }
+  }
+}

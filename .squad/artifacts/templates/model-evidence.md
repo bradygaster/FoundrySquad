@@ -1,0 +1,20 @@
+# Model and Deployment Evidence
+
+- Requirements:
+- Candidate or Model Router strategy:
+- Catalog presence:
+- Compatibility:
+- Regional availability:
+- Entitlement:
+- Quota:
+- Capacity:
+- Deployability:
+- Runtime health:
+- Deployment family/options:
+- Source and operation:
+- Retrieved at / freshness:
+- Subscription, region, project/account scope:
+- Authentication outcome:
+- Evidence artifact:
+- Warnings / uncertainty:
+- Recommendation:

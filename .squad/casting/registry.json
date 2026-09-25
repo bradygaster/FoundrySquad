@@ -1,0 +1,84 @@
+{
+  "agents": {
+    "architect": {
+      "persistent_name": "Architect",
+      "universe": "descriptive",
+      "role": "Foundry Architect",
+      "created_at": "2026-09-24T21:12:49.359-07:00",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "model-strategist": {
+      "persistent_name": "Model Strategist",
+      "universe": "descriptive",
+      "role": "Model Strategist",
+      "created_at": "2026-09-24T21:12:49.359-07:00",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "foundry-engineer": {
+      "persistent_name": "Foundry Engineer",
+      "universe": "descriptive",
+      "role": "Foundry Engineer",
+      "created_at": "2026-09-24T21:12:49.359-07:00",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "platform-engineer": {
+      "persistent_name": "Platform Engineer",
+      "universe": "descriptive",
+      "role": "Foundry Platform Engineer",
+      "created_at": "2026-09-24T21:12:49.359-07:00",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "quality-engineer": {
+      "persistent_name": "Quality Engineer",
+      "universe": "descriptive",
+      "role": "Foundry Quality Engineer",
+      "created_at": "2026-09-24T21:12:49.359-07:00",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "reviewer": {
+      "persistent_name": "Reviewer",
+      "universe": "descriptive",
+      "role": "Foundry Reviewer",
+      "created_at": "2026-09-24T21:12:49.359-07:00",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "scribe": {
+      "persistent_name": "Scribe",
+      "universe": "exempt",
+      "role": "Session Logger",
+      "created_at": "2026-09-24T21:12:49.359-07:00",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "ralph": {
+      "persistent_name": "Ralph",
+      "universe": "exempt",
+      "role": "Work Monitor",
+      "created_at": "2026-09-24T21:12:49.359-07:00",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "rai": {
+      "persistent_name": "Rai",
+      "universe": "exempt",
+      "role": "RAI Reviewer",
+      "created_at": "2026-09-24T21:12:49.359-07:00",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "fact-checker": {
+      "persistent_name": "Fact Checker",
+      "universe": "exempt",
+      "role": "Verification & Devil's Advocate",
+      "created_at": "2026-09-24T21:12:49.359-07:00",
+      "legacy_named": false,
+      "status": "active"
+    }
+  }
+}

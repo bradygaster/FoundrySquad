@@ -1,0 +1,80 @@
+[
+  {
+    "name": "paraphrased Prompt Agent recommendation",
+    "scenario": "C",
+    "response": "The declarative agent is the right starting point; a Hosted Agent is unnecessary here.",
+    "expected": "PASS"
+  },
+  {
+    "name": "explicit Prompt Agent rejection",
+    "scenario": "C",
+    "response": "Do not choose a Prompt Agent. Use a Hosted Agent and avoid a custom runtime discussion.",
+    "expected": "FAIL"
+  },
+  {
+    "name": "negated Prompt Agent recommendation",
+    "scenario": "C",
+    "response": "I would not recommend a Prompt Agent; a Hosted Agent is the better choice than a custom runtime.",
+    "expected": "FAIL"
+  },
+  {
+    "name": "positive mixed-clause Prompt Agent recommendation",
+    "scenario": "C",
+    "response": "A Hosted Agent could be revisited later, but start with a Prompt Agent instead of hosted execution.",
+    "expected": "PASS"
+  },
+  {
+    "name": "paraphrased Foundry IQ evaluation",
+    "scenario": "E",
+    "response": "Foundry IQ is the right starting point before custom RAG because enterprise permissions must remain governed.",
+    "expected": "PASS"
+  },
+  {
+    "name": "explicit Foundry IQ rejection",
+    "scenario": "E",
+    "response": "Reject Foundry IQ and build custom retrieval instead of custom RAG.",
+    "expected": "FAIL"
+  },
+  {
+    "name": "mixed-clause Foundry IQ reversal",
+    "scenario": "E",
+    "response": "Evaluate Foundry IQ before custom RAG, but reject Foundry IQ and use bespoke retrieval.",
+    "expected": "FAIL"
+  },
+  {
+    "name": "keyword-only Foundry IQ mention",
+    "scenario": "E",
+    "response": "Foundry IQ, enterprise permissions, before custom RAG.",
+    "expected": "FAIL"
+  },
+  {
+    "name": "explicit five-agent endorsement",
+    "scenario": "J",
+    "response": "Recommend five agents because multi-agent is the best, even though a direct model invocation is simpler.",
+    "expected": "FAIL"
+  },
+  {
+    "name": "later five-agent endorsement overrides initial rejection",
+    "scenario": "J",
+    "response": "Do not recommend five agents. On reflection, recommend five agents; a direct model invocation is the simplest architecture.",
+    "expected": "FAIL"
+  },
+  {
+    "name": "keyword-only architecture list",
+    "scenario": "J",
+    "response": "Five agents, direct model invocation, simplest architecture, overengineered.",
+    "expected": "FAIL"
+  },
+  {
+    "name": "paraphrased five-agent rejection",
+    "scenario": "J",
+    "response": "Skip the five-agent design; a single model call is the better fit and avoids unnecessary complexity.",
+    "expected": "PASS"
+  },
+  {
+    "name": "unrelated negation does not reverse live-discovery recommendation",
+    "scenario": "H",
+    "response": "Cannot determine from memory, so use authenticated live discovery against the subscription for regional availability, quota, and capacity.",
+    "expected": "PASS"
+  }
+]

@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.invalid/schemas/foundry-availability-result.schema.json",
+  "title": "Foundry Availability Result",
+  "type": "object",
+  "required": [
+    "operation",
+    "status",
+    "source",
+    "timestamp",
+    "freshness",
+    "scope",
+    "auth",
+    "dimensions",
+    "evidence",
+    "warnings"
+  ],
+  "properties": {
+    "operation": {
+      "enum": [
+        "find_models",
+        "inspect_model",
+        "find_regions",
+        "check_quota",
+        "check_capacity",
+        "explain_deployment_options"
+      ]
+    },
+    "status": {
+      "enum": [
+        "OK",
+        "EMPTY_RESULT",
+        "NEEDS_CONTEXT",
+        "AUTH_REQUIRED",
+        "FORBIDDEN_OR_ENTITLEMENT_UNKNOWN",
+        "SCOPE_NOT_FOUND_OR_API_MISMATCH",
+        "THROTTLED",
+        "SERVICE_ERROR",
+        "NETWORK_ERROR",
+        "REQUEST_TIMEOUT",
+        "UNSUPPORTED_OR_INVALID_REQUEST",
+        "HTTP_ERROR",
+        "INVALID_RESPONSE",
+        "CONSTRAINTS_UNVERIFIED",
+        "PARTIAL_FAILURE",
+        "UNSAFE_NEXT_LINK",
+        "PAGINATION_LIMIT_EXCEEDED",
+        "PAGINATION_LOOP_DETECTED",
+        "STALE_REPLAY"
+      ]
+    },
+    "source": {
+      "type": "object",
+      "required": ["kind", "authority", "uri"],
+      "properties": {
+        "kind": { "type": "string" },
+        "authority": { "type": "string" },
+        "uri": { "type": "string" }
+      }
+    },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "freshness": {
+      "type": "object",
+      "required": ["classification"],
+      "properties": {
+        "classification": {
+          "enum": [
+            "live",
+            "live-error",
+            "request-failed",
+            "not-live",
+            "mixed",
+            "current-guidance",
+            "stale-replay"
+          ]
+        },
+        "ageSeconds": { "type": ["number", "null"] },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["classification"],
+            "properties": {
+              "location": { "type": ["string", "null"] },
+              "classification": { "type": "string" },
+              "ageSeconds": { "type": ["number", "null"] }
+            }
+          }
+        }
+      }
+    },
+    "scope": { "type": "object" },
+    "auth": {
+      "type": "object",
+      "required": ["attempted", "outcome"],
+      "properties": {
+        "attempted": { "type": "boolean" },
+        "outcome": { "type": "string" }
+      }
+    },
+    "dimensions": {
+      "type": "object",
+      "required": [
+        "catalogPresence",
+        "compatibility",
+        "regionalAvailability",
+        "entitlement",
+        "quota",
+        "capacity",
+        "deployability",
+        "runtimeHealth"
+      ]
+    },
+    "evidence": {},
+    "pageEvidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["page", "uri", "status", "timestamp"],
+        "properties": {
+          "page": { "type": "integer", "minimum": 1 },
+          "uri": { "type": "string" },
+          "httpStatus": { "type": "integer" },
+          "status": { "type": "string" },
+          "itemCount": { "type": "integer", "minimum": 0 },
+          "error": {},
+          "timestamp": { "type": "string", "format": "date-time" }
+        }
+      }
+    },
+    "constraintEvaluation": {
+      "type": ["object", "null"]
+    },
+    "statusSummary": {
+      "type": ["object", "null"]
+    },
+    "warnings": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": true
+}

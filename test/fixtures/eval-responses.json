@@ -1,0 +1,12 @@
+{
+  "A": "Use a direct model invocation in the API; an agent adds no value for supplied-text summarization.",
+  "B": "Evaluate Model Router for dynamic model selection and make the cost-quality tradeoff measurable before pinning a premium model.",
+  "C": "Start with a Prompt Agent because instructions and supported tools are declarative; avoid a custom runtime before considering a Hosted Agent.",
+  "D": "The custom dependencies and orchestration justify evaluating a Hosted Agent implemented with Microsoft Agent Framework.",
+  "E": "Evaluate Foundry IQ before custom RAG so enterprise permissions and organizational knowledge stay governed.",
+  "F": "Create a shared Toolbox as the centralized reusable capability instead of duplicating each tool definition.",
+  "G": "Create a reusable Foundry Skill and avoid duplicating the shared procedure across agents.",
+  "H": "Do not assume the region from memory. Use authenticated live discovery against the subscription and separately verify regional availability, compatibility, quota and capacity.",
+  "I": "Evaluate Foundry Local for on-device local inference that continues offline without network connectivity.",
+  "J": "Five agents are unnecessary complexity. A single direct model invocation is the simplest architecture for summarizing one paragraph."
+}

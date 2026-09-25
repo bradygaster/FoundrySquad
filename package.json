@@ -1,0 +1,15 @@
+{
+  "name": "microsoft-foundry-squad",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Configuration, read-only discovery, and evaluations for the Microsoft Foundry Squad.",
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "doctor": "node scripts/foundry-doctor.js",
+    "availability": "node scripts/foundry-availability.js",
+    "eval": "node scripts/run-foundry-squad-evals.js --replay test/fixtures/eval-responses.json"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

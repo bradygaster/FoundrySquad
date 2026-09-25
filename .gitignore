@@ -1,0 +1,19 @@
+# Squad: ignore runtime state (logs, inbox, sessions)
+# Note: .squad/casting/* is identity and MUST be committed to main, not ignored
+.squad/orchestration-log/
+.squad/log/
+.squad/decisions/inbox/
+.squad/sessions/
+.squad/.scratch/
+.squad/.cache/
+# Squad: SubSquad activation file (local to this machine)
+.squad-workstream
+
+# Foundry Squad evaluation and replay artifacts
+.artifacts/
+
+# Local Azure and Foundry state
+.azure/
+.azd/
+.foundry/
+azure.local.yaml
