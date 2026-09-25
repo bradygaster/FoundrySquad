@@ -33,6 +33,15 @@ Every scenario journal must record:
 7. Concrete FoundrySquad improvements with an owner surface: coordinator prompt,
    routing, charter, skill, template, tooling, evaluation, or documentation.
 
+Validate completed journals with:
+
+```sh
+npm run validate:experiments
+```
+
+The validator requires every comparison dimension to include a 1-5 score and
+specific supporting evidence.
+
 ## Comparison rubric
 
 Score each dimension from 1 (poor) to 5 (excellent), and support the score with a
