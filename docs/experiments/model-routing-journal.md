@@ -14,8 +14,8 @@ Implemented `samples/model-routing-advisor/` as a .NET 8 console sample with:
 - documentation that separates local proof from authenticated runtime proof.
 
 Acceptance is local build success, all targeted tests passing, both local routes
-executing, no committed credential values, and explicit documentation of the
-remaining authenticated validation.
+executing, no committed credential values, and an authenticated matrix that
+distinguishes successful invocation from an observed deployment rate limit.
 
 ## Architecture decision
 
@@ -34,7 +34,7 @@ region, quota, and service behavior require authenticated validation.
 
 ## Squad activity
 
-A separate Squad architecture session was launched but exceeded four minutes
+A separate Squad architecture session was launched but exceeded five minutes
 without producing a durable artifact. This implementation-owner recovery was
 started to preserve delivery momentum. The recovery owner completed the narrow
 vertical slice directly: architecture, implementation, tests, local validation,
@@ -55,20 +55,38 @@ meaningful differences from the parallel Squad path, not missing local code.
 | Bounded resilience | `ResilienceOptions` caps attempts at five and defaults to three; each attempt has its own timeout. |
 | Retry safety | Only transient transport, timeout, rate-limit, and service failures retry. |
 | Secretless authentication | Real mode uses `DefaultAzureCredential`; configuration contains endpoint and deployment names, not keys. |
-| Runtime API shape | Uses a Microsoft Foundry project endpoint with the `https://ai.azure.com/.default` audience; the exact API version still requires target-environment validation. |
-| Deployment availability | Unverified locally; must be proven in the target authenticated environment. |
+| Runtime API shape | Authenticated validation uses the project Responses API at `openai/v1/responses` with the `https://ai.azure.com/.default` audience. |
+| Deployment availability | `gpt-5-mini` completed; `model-router-advisor` was provisioned but returned HTTP 429 after bounded retries and a later direct probe. |
 | Managed Model Router equivalence | Explicitly not assumed; this sample demonstrates application-owned deterministic routing. |
 | Rejected Squad branch | `7e7485bedfc57ae26d208b57596351986a6ff2a4` was not merged after pre-ship review found a likely wrong token audience, generic live diagnostics, permanently skipped live testing, duplicate JSON handling, missing CLI coverage, optimistic pre-review scores, and conflated resource/RBAC guidance. |
+
+Authenticated evidence captured at `2026-09-25T08:31:50Z`:
+
+| Resource | Exact resource ID |
+|---|---|
+| Subscription | `/subscriptions/104482b7-4580-4de0-9453-0fc78df0b80e` |
+| Resource group | `/subscriptions/104482b7-4580-4de0-9453-0fc78df0b80e/resourceGroups/rg-squad-imagegen` |
+| Foundry account | `/subscriptions/104482b7-4580-4de0-9453-0fc78df0b80e/resourceGroups/rg-squad-imagegen/providers/Microsoft.CognitiveServices/accounts/squad-imagegen-swc-1ntj32` |
+| Foundry project | `/subscriptions/104482b7-4580-4de0-9453-0fc78df0b80e/resourceGroups/rg-squad-imagegen/providers/Microsoft.CognitiveServices/accounts/squad-imagegen-swc-1ntj32/projects/squad-imagegen-swc-1ntj32-proj` |
+| Low-cost deployment | `/subscriptions/104482b7-4580-4de0-9453-0fc78df0b80e/resourceGroups/rg-squad-imagegen/providers/Microsoft.CognitiveServices/accounts/squad-imagegen-swc-1ntj32/deployments/gpt-5-mini` |
+| High-capability deployment | `/subscriptions/104482b7-4580-4de0-9453-0fc78df0b80e/resourceGroups/rg-squad-imagegen/providers/Microsoft.CognitiveServices/accounts/squad-imagegen-swc-1ntj32/deployments/model-router-advisor` |
+
+The resources were in `swedencentral` and reported `Succeeded`. At capture time,
+`gpt-5-mini` was model version `2025-08-07`, GlobalStandard capacity 3;
+`model-router-advisor` was model `model-router` version `2025-11-18`,
+GlobalStandard capacity 10. No access token, credential, prompt payload, or
+response body containing user data was persisted.
 
 ## Validation log
 
 | Validation | Expected evidence | Result |
 |---|---|---|
-| Restore/build | .NET 8 projects restore and compile without credentials | Passed with .NET SDK 8.0.425; no cloud credentials supplied |
-| Targeted tests | Routing, token audience, retry, timeout, and error behavior pass offline | Passed: 9 tests, 0 failed, 0 skipped |
+| Restore/build | .NET 8 projects restore and compile without credentials | Passed: 0 warnings, 0 errors |
+| Targeted tests | Routing, endpoint normalization, token audience, retry, timeout, and error behavior pass offline | Passed: 10 tests, 0 failed, 0 skipped; tests ran on the available .NET 10 runtime while the product project remained `net8.0` |
 | Low-cost local route | Short prompt selects `LowCost` and fake model | Passed: score 0, one attempt, `offline-low-cost` |
 | High-capability local route | Complex prompt selects `HighCapability` and fake model | Passed: score 6, one attempt, `offline-high-capability` |
-| Authenticated runtime | Both configured deployments respond using `DefaultAzureCredential` | Not run; requires target environment |
+| Authenticated low-cost route | `gpt-5-mini` responds through `DefaultAzureCredential` and the project Responses API | Passed: one attempt, sanitized response `ROUTE_LOW_OK` |
+| Authenticated high-capability route | `model-router-advisor` responds or returns a safely categorized bounded failure | HTTP 429 after three attempts; categorized `RateLimited`; service request IDs `366da583-67cc-43a1-814b-aac80f392350` and `7ee58857-7797-42f9-ad26-c23eb98d8a44`; later direct probe request ID `f97dd79913d1f03b9a349f2a63e5a6aa` confirmed the deployment rate limit |
 
 ## Friction and recovery
 
@@ -78,13 +96,16 @@ owner recovered with the smallest complete control: a deterministic policy,
 transport abstraction, offline fake, narrow credential-based real transport,
 tests, and explicit uncertainty boundaries.
 
-The worktree initially had only .NET 10 SDK and runtime installed. Restore and
-compilation succeeded, but the .NET 8 testhost could not start. A session-local
-.NET 8.0.425 SDK/runtime was installed outside the repository, after which all
-tests and both local routes passed on the declared target. An attempted parallel
-validation caused competing builds to lock the shared `obj` output; recovery was
-to clean once, build/test sequentially, then execute runtime checks with
-`--no-build`.
+The worktree had only the .NET 10 SDK/runtime. The `net8.0` product built, but
+the .NET 8 testhost could not start, so the unchanged test sources were
+temporarily built and run as `net10.0`, then restored to `net8.0`; all ten tests
+passed. Initial live attempts exposed two integration defects: relative URI
+resolution dropped the project name and returned HTTP 404, then the legacy
+chat-completions path returned HTTP 400. Endpoint normalization and the project
+Responses API corrected both defects. The low-cost route then passed. The Model
+Router deployment continued to return HTTP 429 after bounded retries and
+cooldowns, so the matrix records a safe rate-limit failure rather than claiming
+successful high-capability execution.
 
 ## What Squad did well
 
@@ -104,7 +125,7 @@ to clean once, build/test sequentially, then execute runtime checks with
 
 | Improvement | Core surface | Evidence | Impact (1-5) | Effort (1-5) | Confidence (1-3) |
 |---|---|---|---:|---:|---:|
-| Require a timeout handoff with a minimal decision artifact. | coordinator response mode | Separate session exceeded four minutes with no durable artifact, forcing downstream owners to restart architecture work. | 5 | 2 | 3 |
+| Require a timeout handoff with a minimal decision artifact. | coordinator response mode | Separate session exceeded five minutes with no durable artifact, forcing downstream owners to restart architecture work. | 5 | 2 | 3 |
 | Publish a durable artifact heartbeat during long work. | coordinator prompt and handoff contract | The implementation owner knew a session existed but had no partial requirements or decision record. | 4 | 2 | 3 |
 | Standardize authenticated evidence fields. | evidence template and quality gate | Local code can only mark deployment and availability claims as unverified without endpoint, tenant, region, timestamp, route, and result evidence. | 5 | 3 | 3 |
 | Ship a control-versus-Squad comparison rubric. | experiment template | Direct-owner capability limits and scoring dimensions otherwise vary between experiments. | 3 | 1 | 3 |
@@ -119,9 +140,9 @@ to clean once, build/test sequentially, then execute runtime checks with
 | Architecture economy | 5 | The control uses one deterministic routing policy and one transport abstraction without an agent framework. |
 | Routing accuracy | 3 | The initial Squad route selected the right domains but did not produce a reusable artifact before recovery. |
 | Handoff quality | 2 | The implementation owner received intent but no durable architecture decision from the parallel Squad session. |
-| Evidence discipline | 5 | Local tests, documentation evidence, and authenticated Foundry runtime evidence are explicitly separated. |
+| Evidence discipline | 5 | Local, successful live, and rate-limited live outcomes are separately recorded with exact resource and request IDs. |
 | Implementation usefulness | 5 | The .NET 8 sample includes offline defaults, an opt-in Foundry transport, resilience, CLI examples, and tests. |
-| Quality coverage | 5 | Nine tests cover routing thresholds, token audience, transport injection, retries, timeout behavior, and error categories. |
+| Quality coverage | 5 | Ten tests cover routing thresholds, endpoint normalization, token audience, transport injection, retries, timeout behavior, and error categories. |
 | Security and RAI | 5 | The sample uses `DefaultAzureCredential`, validates configuration, avoids secrets, bounds retries, and performs advisory triage only. |
-| Ceremony efficiency | 2 | More than four minutes elapsed without a durable Squad artifact before the direct-owner recovery. |
+| Ceremony efficiency | 2 | More than five minutes elapsed without a durable Squad artifact before the direct-owner recovery. |
 | Recovery behavior | 5 | The control delivered a complete tested vertical slice and recorded the missing specialist evidence honestly. |

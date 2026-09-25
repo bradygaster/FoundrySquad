@@ -48,7 +48,6 @@ commit their values:
 | `FOUNDRY_ENDPOINT` | HTTPS Microsoft Foundry project endpoint |
 | `FOUNDRY_LOW_COST_DEPLOYMENT` | Existing deployment used for the low-cost route |
 | `FOUNDRY_HIGH_CAPABILITY_DEPLOYMENT` | Existing deployment used for the high-capability route |
-| `FOUNDRY_API_VERSION` | Optional API version; defaults to `2024-10-21` |
 
 Authenticate using any supported `DefaultAzureCredential` source, such as Azure
 CLI login for development or managed identity when hosted. Interactive browser
@@ -61,7 +60,8 @@ dotnet run --project src/ModelRoutingAdvisor -- --real \
 
 Successful authenticated validation proves that the configured identity can
 acquire a Foundry data-plane token and invoke the named deployment at that
-endpoint. Validate both routes separately. Model Router-specific behavior,
+endpoint through the project Responses API (`openai/v1/responses`). Validate
+both routes separately. Model Router-specific behavior,
 regional availability, quota, content filtering, latency, and cost must be
 verified in the target environment; local tests intentionally make no claims
 about them.

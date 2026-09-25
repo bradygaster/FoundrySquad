@@ -27,20 +27,17 @@ public sealed class FakeModelTransport : IModelTransport
 public sealed record FoundryOptions(
     Uri Endpoint,
     string LowCostDeployment,
-    string HighCapabilityDeployment,
-    string ApiVersion)
+    string HighCapabilityDeployment)
 {
     public const string EndpointVariable = "FOUNDRY_ENDPOINT";
     public const string LowCostDeploymentVariable = "FOUNDRY_LOW_COST_DEPLOYMENT";
     public const string HighCapabilityDeploymentVariable = "FOUNDRY_HIGH_CAPABILITY_DEPLOYMENT";
-    public const string ApiVersionVariable = "FOUNDRY_API_VERSION";
 
     public static FoundryOptions FromEnvironment()
     {
         var endpointValue = Environment.GetEnvironmentVariable(EndpointVariable);
         var lowCostDeployment = Environment.GetEnvironmentVariable(LowCostDeploymentVariable);
         var highCapabilityDeployment = Environment.GetEnvironmentVariable(HighCapabilityDeploymentVariable);
-        var apiVersion = Environment.GetEnvironmentVariable(ApiVersionVariable) ?? "2024-10-21";
 
         var missing = new[]
             {
@@ -67,11 +64,12 @@ public sealed record FoundryOptions(
                 $"{EndpointVariable} must be an absolute HTTPS URI.");
         }
 
+        var normalizedEndpoint = new Uri(endpoint.AbsoluteUri.TrimEnd('/') + "/", UriKind.Absolute);
+
         return new FoundryOptions(
-            endpoint,
+            normalizedEndpoint,
             lowCostDeployment!,
-            highCapabilityDeployment!,
-            apiVersion);
+            highCapabilityDeployment!);
     }
 
     public string DeploymentFor(ModelPath path) => path switch
@@ -133,21 +131,15 @@ public sealed class FoundryModelTransport : IModelTransport
         }
 
         var deployment = _options.DeploymentFor(request.Path);
-        var endpoint = new Uri(
-            _options.Endpoint,
-            $"openai/deployments/{Uri.EscapeDataString(deployment)}/chat/completions" +
-            $"?api-version={Uri.EscapeDataString(_options.ApiVersion)}");
+        var endpoint = new Uri(_options.Endpoint, "openai/v1/responses");
 
         using var message = new HttpRequestMessage(HttpMethod.Post, endpoint);
         message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken.Token);
         message.Content = new StringContent(
             JsonSerializer.Serialize(new
             {
-                messages = new[]
-                {
-                    new { role = "user", content = request.Prompt }
-                },
-                temperature = 0
+                model = deployment,
+                input = request.Prompt
             }),
             Encoding.UTF8,
             "application/json");
@@ -169,10 +161,17 @@ public sealed class FoundryModelTransport : IModelTransport
         {
             using var document = JsonDocument.Parse(responseBody);
             var content = document.RootElement
-                .GetProperty("choices")[0]
-                .GetProperty("message")
-                .GetProperty("content")
-                .GetString();
+                .GetProperty("output")
+                .EnumerateArray()
+                .Where(item =>
+                    item.TryGetProperty("type", out var type) &&
+                    type.GetString() == "message")
+                .SelectMany(item => item.GetProperty("content").EnumerateArray())
+                .Where(item =>
+                    item.TryGetProperty("type", out var type) &&
+                    type.GetString() == "output_text")
+                .Select(item => item.GetProperty("text").GetString())
+                .FirstOrDefault(text => !string.IsNullOrWhiteSpace(text));
 
             if (string.IsNullOrWhiteSpace(content))
             {
@@ -181,7 +180,8 @@ public sealed class FoundryModelTransport : IModelTransport
 
             return new ModelResponse(content, deployment);
         }
-        catch (JsonException exception)
+        catch (Exception exception) when (
+            exception is JsonException or KeyNotFoundException or InvalidOperationException)
         {
             throw new ModelTransportException(
                 ModelErrorCategory.InvalidResponse,
