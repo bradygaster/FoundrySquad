@@ -11,7 +11,7 @@ const read = (...parts) => readFileSync(join(ROOT, ...parts), 'utf8');
 test('roster and casting contain all six specialists', () => {
   const team = read('.squad', 'team.md');
   const casting = JSON.parse(read('.squad', 'casting', 'registry.json'));
-  for (const agent of ['architect', 'model-strategist', 'foundry-engineer', 'platform-engineer', 'quality-engineer', 'reviewer']) {
+  for (const agent of ['architect', 'model-strategist', 'agent-engineer', 'integration-engineer', 'knowledge-engineer', 'platform-engineer', 'quality-engineer', 'reviewer']) {
     assert.ok(casting.agents[agent], `missing casting entry ${agent}`);
     assert.match(team.toLowerCase(), new RegExp(agent.replace('-', ' ')));
   }
@@ -29,7 +29,7 @@ test('generated coordinator capabilities reflect the cast squad', () => {
 });
 
 test('specialist charters define inputs outputs evidence and completion', () => {
-  for (const agent of ['architect', 'model-strategist', 'foundry-engineer', 'platform-engineer', 'quality-engineer', 'reviewer']) {
+  for (const agent of ['architect', 'model-strategist', 'agent-engineer', 'integration-engineer', 'knowledge-engineer', 'platform-engineer', 'quality-engineer', 'reviewer']) {
     const charter = read('.squad', 'agents', agent, 'charter.md');
     assert.match(charter, /## Inputs/);
     assert.match(charter, /## Outputs and Handoffs/);

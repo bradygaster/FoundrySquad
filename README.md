@@ -58,9 +58,11 @@ A documentation page, catalog entry, empty result, or authorization error is not
 | Member | Role | Owns and hands off |
 | --- | --- | --- |
 | **Squad** | Coordinator | Routes work, selects response mode, enforces contracts and gates, and assembles the final result. |
-| **Architect** | Foundry Architect | Requirements and the smallest sufficient architecture. Hands model requirements to Model Strategist, application boundaries to Foundry Engineer, platform constraints to Platform Engineer, and measurable behavior to Quality Engineer. |
+| **Architect** | Foundry Architect | Requirements and the smallest sufficient architecture. Hands model requirements to Model Strategist, agent/orchestration boundaries to Agent Engineer, tool/Toolbox/Skill boundaries to Integration Engineer, knowledge/grounding boundaries to Knowledge Engineer, platform constraints to Platform Engineer, and measurable behavior to Quality Engineer. |
 | **Model Strategist** | Model and deployment strategist | Model/Router candidates, capabilities, regions, deployment types, quota, and capacity evidence. Recommends to Architect and supplies deployment facts to Platform Engineer. |
-| **Foundry Engineer** | Application engineer | Supported SDK integration, agents, tools, IQ, Toolbox, Skills, application state, failure handling, and tests. Hands telemetry signals to Quality Engineer and runtime/configuration needs to Platform Engineer. |
+| **Agent Engineer** | Foundry agent engineer | Direct model calls, Model Router integration, Responses API ephemeral agents, Prompt Agents, Hosted Agents, Microsoft Agent Framework orchestration, application state, failure handling, and tests. Hands telemetry signals to Quality Engineer and runtime/configuration needs to Platform Engineer. |
+| **Integration Engineer** | Foundry integration engineer | Toolbox, Foundry Tools (search, code execution, OpenAPI, MCP, agent-to-agent), and Foundry Skills. Hands telemetry signals to Quality Engineer and runtime/configuration needs to Platform Engineer. |
+| **Knowledge Engineer** | Foundry knowledge engineer | Foundry IQ, governed knowledge retrieval, permission-aware grounding, and RAG-vs-bespoke-retrieval decisions. Hands telemetry signals to Quality Engineer and runtime/configuration needs to Platform Engineer. |
 | **Platform Engineer** | Foundry platform engineer | Developer environment, Entra identity, least-privilege RBAC, networking, `azd`/Bicep, CI/CD, deployment, promotion, rollback, and observability plumbing. |
 | **Quality Engineer** | Foundry quality engineer | Behavior specifications, datasets, rubrics, evaluators, thresholds, adversarial/failure testing, and tracing evidence. Reports acceptance status and defects to implementation owners and Reviewer. |
 | **Reviewer** | Foundry reviewer | Challenges complexity, supportability, stale assumptions, weak security, missing evaluations, and operational gaps. Approves or rejects; a rejection names a different revision owner. |
@@ -77,7 +79,7 @@ The authoritative roster and routing rules are in [`.squad/team.md`](.squad/team
 1. **Requirements** — Architect records experience, constraints, risks, assumptions, and acceptance criteria.
 2. **Architecture gate** — Architect, Model Strategist, Platform Engineer, Quality Engineer, Reviewer, and Fact Checker challenge unnecessary components and define evidence needs.
 3. **Current evidence** — Model Strategist and Fact Checker verify volatile platform claims. Subscription-specific claims require authorized, authenticated scope.
-4. **Contracted parallel delivery** — after inputs, outputs, and acceptance thresholds are explicit, Foundry Engineer, Platform Engineer, and Quality Engineer may work in parallel.
+4. **Contracted parallel delivery** — after inputs, outputs, and acceptance thresholds are explicit, Agent Engineer, Integration Engineer, Knowledge Engineer, Platform Engineer, and Quality Engineer may work in parallel.
 5. **Implementation and infrastructure validation** — application tests, identity/RBAC evidence, deployment verification, and rollback procedures are produced.
 6. **Evaluation and observation** — repeatable evaluation thresholds and diagnostic traces cover important behavior and failure paths.
 7. **Responsible AI and pre-ship review** — Rai reviews applicable risks; Reviewer requires complete implementation, infrastructure, quality, identity, operations, and current-evidence artifacts.

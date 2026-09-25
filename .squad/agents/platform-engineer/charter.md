@@ -33,7 +33,7 @@
 
 - `azd` plus Bicep by default, identity/RBAC design, CI/CD, deployment and rollback commands, and completed infrastructure artifact
 - Local `DefaultAzureCredential` guidance without starting login; deterministic user-assigned or system-assigned managed identity in production as selected; workload identity/OIDC in CI
-- Resource endpoints and operational plumbing handed to Foundry Engineer and Quality Engineer
+- Resource endpoints and operational plumbing handed to Agent Engineer, Integration Engineer, Knowledge Engineer, and Quality Engineer
 
 ## Evidence and Completion
 

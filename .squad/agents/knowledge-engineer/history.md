@@ -8,3 +8,4 @@
 ## Learnings
 
 - Correct first-party support outranks language preference.
+- Split from the former Foundry Engineer role on 2026-09-25 to give Foundry IQ / grounding and retrieval its own dedicated depth.

@@ -10,7 +10,7 @@
 | **When** | before |
 | **Condition** | multi-agent task involving 2+ agents modifying shared systems |
 | **Facilitator** | architect |
-| **Participants** | architect, model-strategist, foundry-engineer, platform-engineer, quality-engineer, reviewer |
+| **Participants** | architect, model-strategist, agent-engineer, integration-engineer, knowledge-engineer, platform-engineer, quality-engineer, reviewer |
 | **Time budget** | focused |
 | **Enabled** | ✅ yes |
 
