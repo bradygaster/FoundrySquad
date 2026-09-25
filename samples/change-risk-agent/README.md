@@ -15,7 +15,7 @@ quota, capacity, and runtime support are verified.
 
 ## Run
 
-Requires .NET 10 or later for this checked-in project:
+Requires .NET SDK `10.0.301`, as pinned by the repository `global.json`:
 
 ```sh
 dotnet run --project src/ChangeRiskAgent -- CHG-1001

@@ -6,7 +6,7 @@
 
 ## Outcome and acceptance criteria
 
-Implemented `samples/permission-aware-knowledge/` as a compact .NET 8 console
+Implemented `samples/permission-aware-knowledge/` as a compact .NET 10 console
 application with checked-in synthetic documents, deterministic local retrieval,
 permission filtering before ranking and generation, exact citations, and
 closed failure for unauthorized or insufficient evidence. Offline evaluation
@@ -80,11 +80,10 @@ the synthesis and deferred improvements.
 
 - `dotnet build samples/permission-aware-knowledge/PermissionAwareKnowledge.slnx
   --configuration Release`: passed with 0 warnings and 0 errors.
-- `DOTNET_ROLL_FORWARD=Major dotnet run --project
+- `dotnet run --project
   samples/permission-aware-knowledge/tests/PermissionAwareKnowledge.Evaluation
-  --configuration Release --no-build`: 4/4 evaluations passed. Roll-forward
-  was required only because the validation host had the .NET 10 runtime but not
-  the .NET 8 runtime; the projects remain targeted at .NET 8.
+  --configuration Release --no-build`: 4/4 evaluations passed on .NET SDK
+  10.0.301 with the projects targeting .NET 10 directly.
 - Authorized CLI scenario returned the rollback sentence with the
   `engineering-orion-runbook` citation.
 - The same question with only the `Everyone` caller group returned generic
@@ -158,7 +157,7 @@ secrets.
 | Routing accuracy | 3 | Knowledge and platform concerns were identified, but the initial Squad session did not hand off a durable artifact before recovery. |
 | Handoff quality | 2 | The direct owner received the scenario contract but no reusable specialist architecture or evidence artifact. |
 | Evidence discipline | 5 | Local fixture validation is explicitly separated from authenticated Foundry IQ and model runtime evidence. |
-| Implementation usefulness | 5 | The .NET 8 sample includes fixtures, permission filtering, deterministic answers, citations, CLI documentation, and an opt-in Foundry adapter. |
+| Implementation usefulness | 5 | The .NET 10 sample includes fixtures, permission filtering, deterministic answers, citations, CLI documentation, and an opt-in Foundry adapter. |
 | Quality coverage | 5 | Four evaluations cover citation accuracy, permission isolation, unknown questions, and unauthorized evidence exclusion from generation. |
 | Security and RAI | 5 | Authorization happens before ranking/generation, failures do not disclose restricted document existence, and identity is secretless. |
 | Ceremony efficiency | 2 | The initial architecture session exceeded four minutes without a durable artifact. |

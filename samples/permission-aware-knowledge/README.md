@@ -4,7 +4,7 @@
 > resource, identity, endpoint, request, or response identifiers. The optional
 > provider requires caller-supplied endpoint configuration.
 
-This .NET 8 console sample answers questions only from documents the caller is
+This .NET 10 console sample answers questions only from documents the caller is
 allowed to read. Its default path is local-first: checked-in synthetic fixtures,
 deterministic token ranking, deterministic passage selection, and explicit
 citations. No Azure account, model deployment, network call, or secret is
@@ -25,7 +25,7 @@ revealing whether a restricted document exists.
 
 ## Run locally
 
-Prerequisites: a .NET SDK capable of targeting .NET 8.
+Prerequisite: .NET SDK `10.0.301`, as pinned by the repository `global.json`.
 
 ```sh
 cd samples/permission-aware-knowledge

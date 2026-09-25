@@ -27,11 +27,11 @@ and
 [`foundry-permission-aware-knowledge`](https://github.com/bradygaster/foundry-permission-aware-knowledge).
 
 - [`samples/model-routing-advisor/`](samples/model-routing-advisor/) -
-  local-first .NET 8 deterministic model routing with an opt-in Foundry transport.
+  local-first .NET 10 deterministic model routing with an opt-in Foundry transport.
 - [`samples/change-risk-agent/`](samples/change-risk-agent/) -
   local-first typed, read-only tool orchestration with fail-closed advisories.
 - [`samples/permission-aware-knowledge/`](samples/permission-aware-knowledge/) -
-  local-first .NET 8 permission-aware grounded answers with deterministic
+  local-first .NET 10 permission-aware grounded answers with deterministic
   citations and an opt-in `DefaultAzureCredential` Foundry runtime adapter.
 
 ## Mission and operating philosophy
@@ -170,7 +170,7 @@ azd ext list
 
 | Requirement | Needed when |
 | --- | --- |
-| **.NET SDK** | C#/.NET application, Agent Framework, SDK, or hosted-agent work. Use the latest supported LTS; the Foundry extension documentation currently requires .NET 8 or later for applicable agent frameworks. Verify with `dotnet --info`. |
+| **.NET SDK** | C#/.NET application, Agent Framework, SDK, or hosted-agent work. This repository pins the stable .NET 10 SDK `10.0.301` in `global.json`; verify with `dotnet --version`. The Foundry extension documentation requires .NET 8 or later for applicable agent frameworks. |
 | **Python 3.10+** | A selected sample, SDK, evaluator, or agent framework requires Python. The repository's own scripts do not. Use a virtual environment; do not install project packages globally. Verify with `python3 --version`. |
 | **Docker** | The chosen application, emulator, container build, dev container, or deployment target requires it. Verify with `docker version`. |
 | **Foundry Local** | Offline/on-device inference is selected. Install and hardware requirements are platform-specific; verify with `foundry --version` after installation. |
