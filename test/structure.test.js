@@ -17,6 +17,17 @@ test('roster and casting contain all six specialists', () => {
   }
 });
 
+test('generated coordinator capabilities reflect the cast squad', () => {
+  const coordinator = read('.github', 'agents', 'squad.agent.md');
+  const metadata = coordinator.match(
+    /<!-- squad:capabilities schema=1 specialists=(\d+) taskTypes=(\d+) hints=(\d+) -->/
+  );
+  assert.ok(metadata, 'missing generated capability metadata');
+  assert.ok(Number(metadata[1]) > 0, 'generated capabilities must include specialists');
+  assert.ok(Number(metadata[2]) > 0, 'generated capabilities must include task types');
+  assert.doesNotMatch(coordinator, /this squad has not been cast yet/i);
+});
+
 test('specialist charters define inputs outputs evidence and completion', () => {
   for (const agent of ['architect', 'model-strategist', 'foundry-engineer', 'platform-engineer', 'quality-engineer', 'reviewer']) {
     const charter = read('.squad', 'agents', agent, 'charter.md');
