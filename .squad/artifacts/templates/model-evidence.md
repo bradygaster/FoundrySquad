@@ -11,6 +11,9 @@
 - Deployability:
 - Runtime health:
 - Deployment family/options:
+- Endpoint family:
+- Token audience:
+- Data-plane RBAC role and scope:
 - Source and operation:
 - Retrieved at / freshness:
 - Subscription, region, project/account scope:

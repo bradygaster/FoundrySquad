@@ -5,6 +5,7 @@
 - Offline deterministic tests:
 - Documentation-supported claims:
 - Authenticated environment smoke tests:
+- Live-smoke opt-in trigger and skip/block result:
 - Observed runtime evaluations:
 - Unevidenced lanes and reason:
 - Evaluators and rationale:

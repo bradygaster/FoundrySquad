@@ -44,6 +44,7 @@ test('routing and ceremonies enforce Foundry gates', () => {
   const qualityCharter = read('.squad', 'agents', 'quality-engineer', 'charter.md');
   const reviewerCharter = read('.squad', 'agents', 'reviewer', 'charter.md');
   const evaluationTemplate = read('.squad', 'artifacts', 'templates', 'evaluation.md');
+  const modelEvidenceTemplate = read('.squad', 'artifacts', 'templates', 'model-evidence.md');
   const requirementsTemplate = read('.squad', 'artifacts', 'templates', 'requirements.md');
   const architectureTemplate = read('.squad', 'artifacts', 'templates', 'architecture-decision.md');
   assert.match(routing, /Foundry Delivery Route/);
@@ -55,6 +56,11 @@ test('routing and ceremonies enforce Foundry gates', () => {
   assert.match(qualityCharter, /offline deterministic[\s\S]*authenticated environment smoke[\s\S]*observed runtime/i);
   assert.match(qualityCharter, /NOT_EVIDENCED/);
   assert.match(evaluationTemplate, /Authenticated environment smoke tests/);
+  assert.match(evaluationTemplate, /Live-smoke opt-in trigger and skip\/block result/);
+  assert.match(modelEvidenceTemplate, /Endpoint family/);
+  assert.match(modelEvidenceTemplate, /Token audience/);
+  assert.match(modelEvidenceTemplate, /Data-plane RBAC role and scope/);
+  assert.match(ceremonies, /scorecards[\s\S]*finalized only[\s\S]*record their verdicts/i);
   assert.match(reviewerCharter, /agent request[\s\S]*host dispatch[\s\S]*typed tool result[\s\S]*final response/i);
   assert.match(reviewerCharter, /allowlist[\s\S]*side-effect class[\s\S]*exact request binding/i);
   assert.match(requirementsTemplate, /Advisory vs action-taking/);

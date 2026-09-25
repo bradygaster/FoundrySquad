@@ -84,7 +84,8 @@ public sealed record FoundryOptions(
 
 public sealed class FoundryModelTransport : IModelTransport
 {
-    private static readonly string[] TokenScopes = ["https://cognitiveservices.azure.com/.default"];
+    public const string TokenScope = "https://ai.azure.com/.default";
+    private static readonly string[] TokenScopes = [TokenScope];
 
     private readonly HttpClient _httpClient;
     private readonly TokenCredential _credential;
@@ -161,7 +162,7 @@ public sealed class FoundryModelTransport : IModelTransport
 
         if (!response.IsSuccessStatusCode)
         {
-            throw CreateHttpFailure(response.StatusCode, responseBody);
+            throw CreateHttpFailure(response);
         }
 
         try
@@ -189,10 +190,9 @@ public sealed class FoundryModelTransport : IModelTransport
         }
     }
 
-    private static ModelTransportException CreateHttpFailure(
-        HttpStatusCode statusCode,
-        string responseBody)
+    private static ModelTransportException CreateHttpFailure(HttpResponseMessage response)
     {
+        var statusCode = response.StatusCode;
         var (category, transient) = statusCode switch
         {
             HttpStatusCode.Unauthorized => (ModelErrorCategory.Authentication, false),
@@ -203,13 +203,18 @@ public sealed class FoundryModelTransport : IModelTransport
             _ => (ModelErrorCategory.Service, false)
         };
 
-        var detail = string.IsNullOrWhiteSpace(responseBody)
-            ? "No response detail was provided."
-            : responseBody[..Math.Min(responseBody.Length, 300)];
+        var requestId = response.Headers.TryGetValues("x-request-id", out var values)
+            ? values.FirstOrDefault()
+            : response.Headers.TryGetValues("apim-request-id", out values)
+                ? values.FirstOrDefault()
+                : null;
+        var diagnostic = string.IsNullOrWhiteSpace(requestId)
+            ? "No service request ID was returned."
+            : $"Service request ID: {requestId}.";
 
         return new ModelTransportException(
             category,
-            $"Foundry returned HTTP {(int)statusCode} ({statusCode}). {detail}",
+            $"Foundry returned HTTP {(int)statusCode} ({statusCode}). {diagnostic}",
             transient,
             (int)statusCode);
     }

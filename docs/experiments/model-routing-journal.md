@@ -55,16 +55,17 @@ meaningful differences from the parallel Squad path, not missing local code.
 | Bounded resilience | `ResilienceOptions` caps attempts at five and defaults to three; each attempt has its own timeout. |
 | Retry safety | Only transient transport, timeout, rate-limit, and service failures retry. |
 | Secretless authentication | Real mode uses `DefaultAzureCredential`; configuration contains endpoint and deployment names, not keys. |
-| Runtime API shape | Assumes an Azure OpenAI-compatible Foundry chat-completions endpoint and API version. |
+| Runtime API shape | Uses a Microsoft Foundry project endpoint with the `https://ai.azure.com/.default` audience; the exact API version still requires target-environment validation. |
 | Deployment availability | Unverified locally; must be proven in the target authenticated environment. |
 | Managed Model Router equivalence | Explicitly not assumed; this sample demonstrates application-owned deterministic routing. |
+| Rejected Squad branch | `7e7485bedfc57ae26d208b57596351986a6ff2a4` was not merged after pre-ship review found a likely wrong token audience, generic live diagnostics, permanently skipped live testing, duplicate JSON handling, missing CLI coverage, optimistic pre-review scores, and conflated resource/RBAC guidance. |
 
 ## Validation log
 
 | Validation | Expected evidence | Result |
 |---|---|---|
 | Restore/build | .NET 8 projects restore and compile without credentials | Passed with .NET SDK 8.0.425; no cloud credentials supplied |
-| Targeted tests | Routing, retry, timeout, and error behavior pass offline | Passed: 8 tests, 0 failed, 0 skipped |
+| Targeted tests | Routing, token audience, retry, timeout, and error behavior pass offline | Passed: 9 tests, 0 failed, 0 skipped |
 | Low-cost local route | Short prompt selects `LowCost` and fake model | Passed: score 0, one attempt, `offline-low-cost` |
 | High-capability local route | Complex prompt selects `HighCapability` and fake model | Passed: score 6, one attempt, `offline-high-capability` |
 | Authenticated runtime | Both configured deployments respond using `DefaultAzureCredential` | Not run; requires target environment |
@@ -108,6 +109,8 @@ to clean once, build/test sequentially, then execute runtime checks with
 | Standardize authenticated evidence fields. | evidence template and quality gate | Local code can only mark deployment and availability claims as unverified without endpoint, tenant, region, timestamp, route, and result evidence. | 5 | 3 | 3 |
 | Ship a control-versus-Squad comparison rubric. | experiment template | Direct-owner capability limits and scoring dimensions otherwise vary between experiments. | 3 | 1 | 3 |
 | Maintain an offline-first .NET sample baseline. | sample template | The recovery owner recreated routing, transport, resilience, and test conventions from scratch. | 4 | 3 | 2 |
+| Finalize experiment scores only after pre-ship verdicts. | ceremonies and journal template | The rejected Squad branch had optimistic usefulness, quality, and RAI scores before Reviewer/Rai/Fact Checker findings landed. | 5 | 2 | 3 |
+| Record endpoint family, token audience, and data-plane RBAC together. | model and platform evidence | The rejected branch used a likely incorrect audience and conflated resource families. | 5 | 2 | 3 |
 
 ## Comparison score
 
@@ -118,7 +121,7 @@ to clean once, build/test sequentially, then execute runtime checks with
 | Handoff quality | 2 | The implementation owner received intent but no durable architecture decision from the parallel Squad session. |
 | Evidence discipline | 5 | Local tests, documentation evidence, and authenticated Foundry runtime evidence are explicitly separated. |
 | Implementation usefulness | 5 | The .NET 8 sample includes offline defaults, an opt-in Foundry transport, resilience, CLI examples, and tests. |
-| Quality coverage | 5 | Eight tests cover routing thresholds, transport injection, retries, timeout behavior, and error categories. |
+| Quality coverage | 5 | Nine tests cover routing thresholds, token audience, transport injection, retries, timeout behavior, and error categories. |
 | Security and RAI | 5 | The sample uses `DefaultAzureCredential`, validates configuration, avoids secrets, bounds retries, and performs advisory triage only. |
 | Ceremony efficiency | 2 | More than four minutes elapsed without a durable Squad artifact before the direct-owner recovery. |
 | Recovery behavior | 5 | The control delivered a complete tested vertical slice and recorded the missing specialist evidence honestly. |

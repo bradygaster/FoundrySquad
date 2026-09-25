@@ -6,7 +6,7 @@ The lab produced three integrated, local-first samples:
 
 | Scenario | Sample | Offline validation | Authenticated Foundry status |
 | --- | --- | --- | --- |
-| Direct model / Model Router | [`model-routing-advisor`](../../samples/model-routing-advisor/README.md) | 8/8 tests passed | Adapter included; target environment not evidenced |
+| Direct model / Model Router | [`model-routing-advisor`](../../samples/model-routing-advisor/README.md) | 9/9 tests passed | Adapter included; target environment not evidenced |
 | Tool-using agent | [`change-risk-agent`](../../samples/change-risk-agent/README.md) | 10/10 checks passed | Adapter boundary documented; runtime not evidenced |
 | Grounded knowledge | [`permission-aware-knowledge`](../../samples/permission-aware-knowledge/README.md) | 4/4 evaluations passed | Adapter included; Foundry IQ/model runtime not evidenced |
 
@@ -35,7 +35,12 @@ Squad selected the correct architecture boundary: direct model semantics with on
 deployment name that can target a fixed model or Model Router, deterministic local
 transport for tests, and no agent framework. Its main failure was delivery: the
 architecture session took more than five minutes before a reusable artifact, so a
-direct implementation control completed the sample.
+direct implementation control completed the sample. Its later Squad-led branch
+(`7e7485bedfc57ae26d208b57596351986a6ff2a4`) was intentionally not merged
+after pre-ship rejection exposed a likely wrong token audience, weak live-smoke
+and CLI coverage, generic diagnostics, optimistic pre-review scoring, and missing
+prompt/data/human-review warnings. Those findings corrected the integrated
+transport audience and moved journal finalization behind the pre-ship verdict.
 
 ### Tool-using agent
 

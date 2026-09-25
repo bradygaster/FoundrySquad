@@ -10,8 +10,9 @@ fake transport, requires no cloud account, and makes no network calls at runtime
 2. `ResilientModelClient` applies a per-attempt timeout and at most three attempts.
 3. `IModelTransport` separates policy and resilience from model access.
 4. `FakeModelTransport` provides deterministic offline behavior.
-5. `FoundryModelTransport` optionally calls an Azure OpenAI-compatible Microsoft
-   Foundry endpoint with a token acquired by `DefaultAzureCredential`.
+5. `FoundryModelTransport` optionally calls a Microsoft Foundry project endpoint
+   with the `https://ai.azure.com/.default` audience and a token acquired by
+   `DefaultAzureCredential`.
 
 The policy routes prompts with a score of four or more to the high-capability
 path. Long prompts, code or diagnostic context, capability keywords, and explicit
@@ -44,7 +45,7 @@ commit their values:
 
 | Variable | Purpose |
 |---|---|
-| `FOUNDRY_ENDPOINT` | HTTPS endpoint, for example an Azure OpenAI-compatible Foundry resource endpoint |
+| `FOUNDRY_ENDPOINT` | HTTPS Microsoft Foundry project endpoint |
 | `FOUNDRY_LOW_COST_DEPLOYMENT` | Existing deployment used for the low-cost route |
 | `FOUNDRY_HIGH_CAPABILITY_DEPLOYMENT` | Existing deployment used for the high-capability route |
 | `FOUNDRY_API_VERSION` | Optional API version; defaults to `2024-10-21` |
@@ -59,11 +60,16 @@ dotnet run --project src/ModelRoutingAdvisor -- --real \
 ```
 
 Successful authenticated validation proves that the configured identity can
-acquire a Cognitive Services token and invoke the named deployment at that
+acquire a Foundry data-plane token and invoke the named deployment at that
 endpoint. Validate both routes separately. Model Router-specific behavior,
 regional availability, quota, content filtering, latency, and cost must be
 verified in the target environment; local tests intentionally make no claims
 about them.
+
+Treat prompts and model output as untrusted data. Do not place production PII,
+credentials, or regulated content in this demonstration. Applications that turn
+the response into a consequential action need explicit validation, prompt-
+injection defenses, deterministic escalation rules, and human approval.
 
 ## Error categories
 
