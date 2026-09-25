@@ -6,6 +6,14 @@ This repository is **configuration, guidance, read-only discovery tooling, schem
 
 For implementation detail behind the guidance here, see the [deeper Foundry Squad reference](docs/foundry-squad.md).
 
+## Sample application lab
+
+The [Foundry Sample Lab](docs/experiments/README.md) uses isolated local
+worktrees and separate Squad sessions to build deep samples for model routing,
+tool-using agents, and grounded knowledge. Each sample records which specialists
+contributed, the evidence and validation produced, workflow friction, and
+actionable improvements to the core FoundrySquad configuration.
+
 ## Mission and operating philosophy
 
 The Squad asks, in order:
