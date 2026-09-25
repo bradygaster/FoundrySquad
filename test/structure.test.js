@@ -40,8 +40,12 @@ test('specialist charters define inputs outputs evidence and completion', () => 
 test('routing and ceremonies enforce Foundry gates', () => {
   const routing = read('.squad', 'routing.md');
   const ceremonies = read('.squad', 'ceremonies.md');
+  const responseMode = read('.github', 'skills', 'coordinator-response-mode', 'SKILL.md');
   assert.match(routing, /Foundry Delivery Route/);
   assert.match(routing, /No false unavailable/);
+  assert.match(routing, /launches implementation within 60 seconds/);
+  assert.match(responseMode, /first implementation artifact within 60/);
+  assert.match(responseMode, /must not block deterministic local code/i);
   assert.equal((ceremonies.match(/\*\*Exit criteria:\*\*/g) || []).length, 2);
   for (const dimension of ['catalog presence', 'compatibility', 'regional availability', 'entitlement', 'quota', 'capacity', 'deployability', 'runtime health']) {
     assert.match(`${routing}\n${ceremonies}`.toLowerCase(), new RegExp(dimension));

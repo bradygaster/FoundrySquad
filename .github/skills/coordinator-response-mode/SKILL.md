@@ -20,6 +20,18 @@ After routing determines WHO handles work, select the response MODE based on tas
 | **Standard** | Normal tasks, single-agent work requiring full context | Spawn one agent with full ceremony — charter inline, history read, decisions read. This is the current default | ~25-35s |
 | **Full** | Multi-agent work, complex tasks touching 3+ concerns, "Team" requests | Parallel fan-out, full ceremony, Scribe included | ~40-60s |
 
+Full Mode's target is a launch target, not permission for unbounded planning.
+When the request already contains enough constraints to define a safe local seam,
+the coordinator MUST launch an implementation owner in the initial fan-out or
+within 60 seconds. Architecture, evidence, quality, and review agents may continue
+in parallel and can redirect implementation if they find a blocking issue.
+
+Authenticated environment evidence is a hard dependency only for claims or work
+that require that environment. Missing subscription, quota, capacity, deployment,
+or runtime evidence must not block deterministic local code, fixtures, fake
+transports, contract tests, or documentation that labels cloud validation as
+pending.
+
 ## Direct Mode exemplars
 
 Coordinator answers instantly, no spawn:
@@ -61,6 +73,10 @@ Multi-agent, parallel fan-out:
 - If uncertain between Direct and Lightweight → choose Lightweight.
 - If uncertain between Lightweight and Standard → choose Standard.
 - **Never downgrade mid-task.** If you started Standard, finish Standard.
+- Full Mode MUST produce or assign the first implementation artifact within 60
+  seconds when a safe local seam is known. If it cannot, record the exact blocking
+  dependency and launch any non-blocked fixture, test, contract, or documentation
+  work instead.
 
 ## Lightweight Spawn Template
 
