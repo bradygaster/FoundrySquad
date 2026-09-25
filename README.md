@@ -15,6 +15,14 @@ contributed, the evidence and validation produced, workflow friction, and
 actionable improvements to the core FoundrySquad configuration. Integrated sample
 applications live under [`samples/`](samples/README.md).
 
+- [`samples/model-routing-advisor/`](samples/model-routing-advisor/) -
+  local-first .NET 8 deterministic model routing with an opt-in Foundry transport.
+- [`samples/change-risk-agent/`](samples/change-risk-agent/) -
+  local-first typed, read-only tool orchestration with fail-closed advisories.
+- [`samples/permission-aware-knowledge/`](samples/permission-aware-knowledge/) -
+  local-first .NET 8 permission-aware grounded answers with deterministic
+  citations and an opt-in `DefaultAzureCredential` Foundry runtime adapter.
+
 ## Mission and operating philosophy
 
 The Squad asks, in order:

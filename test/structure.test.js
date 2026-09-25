@@ -108,3 +108,26 @@ test('repository configuration avoids unsafe installers and embedded secret valu
   assert.doesNotMatch(content, /\b(?:ghp|sk-proj)-[A-Za-z0-9_-]{12,}\b/);
   assert.doesNotMatch(configContent, /[A-Z_]*(?:PASSWORD|TOKEN|SECRET)[A-Z_]*"?\s*[:=]\s*"(?!\$\{|<)[^"]+"/);
 });
+
+test('permission-aware knowledge sample includes offline evaluation and experiment evidence', () => {
+  for (const path of [
+    ['samples', 'permission-aware-knowledge', 'PermissionAwareKnowledge.slnx'],
+    ['samples', 'permission-aware-knowledge', 'fixtures', 'documents.json'],
+    ['samples', 'permission-aware-knowledge', 'src', 'PermissionAwareKnowledge', 'Program.cs'],
+    ['samples', 'permission-aware-knowledge', 'tests', 'PermissionAwareKnowledge.Evaluation', 'Program.cs'],
+    ['docs', 'experiments', 'grounded-knowledge-journal.md']
+  ]) assert.ok(existsSync(join(ROOT, ...path)), `missing ${path.join('/')}`);
+
+  const journal = read('docs', 'experiments', 'grounded-knowledge-journal.md');
+  for (const heading of [
+    'Outcome and acceptance criteria',
+    'Architecture decision',
+    'Squad activity',
+    'Evidence and assumptions',
+    'Validation log',
+    'Friction and recovery',
+    'What Squad did well',
+    'Core FoundrySquad improvements',
+    'Comparison score'
+  ]) assert.match(journal, new RegExp(`^## ${heading}$`, 'm'));
+});
