@@ -4,6 +4,9 @@ This lab exercises FoundrySquad by building real applications in isolated local
 worktrees. Each scenario is owned by a separate Squad session so the application,
 team interactions, evidence, and failures can be reviewed independently.
 
+The parent coordinator's chronological activity and early observations are in
+[the lab log](lab-log.md).
+
 ## Active scenarios
 
 | Scenario | Session | Scope | Required result |
