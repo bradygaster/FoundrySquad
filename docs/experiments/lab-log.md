@@ -40,7 +40,9 @@ journal.
 - The original grounded-knowledge Squad crossed its architecture gate after the
   timebox and selected a local-first .NET permission-aware knowledge sample.
 - The original model-routing Squad remained busy for more than five minutes
-  without a durable artifact.
+  without a durable artifact, then approved a local-first .NET ticket-triage
+  sample using a deterministic fake by default, optional Foundry transport, and
+  no agent framework.
 - Recovery launched two narrowly scoped implementation-owner worktrees for model
   routing and grounded knowledge. These are treated as direct-implementation
   controls, not replacement Squad sessions, so the lab can compare artifact
