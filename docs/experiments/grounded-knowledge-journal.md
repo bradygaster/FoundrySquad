@@ -1,5 +1,9 @@
 # Grounded knowledge experiment journal
 
+> **Sanitized public record — NOT LIVE.** Azure resource, account, tenant,
+> identity, endpoint, and request/response identifiers are fictional placeholders
+> and do not identify real Azure resources. Validation outcomes are anonymized.
+
 ## Outcome and acceptance criteria
 
 Implemented `samples/permission-aware-knowledge/` as a compact .NET 8 console
@@ -59,19 +63,18 @@ the synthesis and deferred improvements.
   claim that every Foundry tenant exposes those routes unchanged.
 - `DefaultAzureCredential` is used only in the opt-in provider. No credential
   values or local Azure state are committed.
-- Authenticated follow-up used subscription
-  `/subscriptions/104482b7-4580-4de0-9453-0fc78df0b80e`, resource group
-  `/subscriptions/104482b7-4580-4de0-9453-0fc78df0b80e/resourceGroups/rg-squad-imagegen`,
-  Foundry account
-  `/subscriptions/104482b7-4580-4de0-9453-0fc78df0b80e/resourceGroups/rg-squad-imagegen/providers/Microsoft.CognitiveServices/accounts/squad-imagegen-swc-1ntj32`,
-  Foundry project
-  `/subscriptions/104482b7-4580-4de0-9453-0fc78df0b80e/resourceGroups/rg-squad-imagegen/providers/Microsoft.CognitiveServices/accounts/squad-imagegen-swc-1ntj32/projects/squad-imagegen-swc-1ntj32-proj`,
-  and search service
-  `/subscriptions/104482b7-4580-4de0-9453-0fc78df0b80e/resourceGroups/rg-squad-imagegen/providers/Microsoft.Search/searchServices/fsq-knowledge-swc-1ntj32`.
-- The live index is `permission-aware-documents` at
-  `https://fsq-knowledge-swc-1ntj32.search.windows.net/indexes/permission-aware-documents`.
-  These identifiers are non-secret resource metadata; bearer tokens, account
-  keys, user identifiers, and response bodies were not recorded.
+- Authenticated follow-up used resources represented publicly by these
+  **fictional, NOT LIVE** examples:
+  `/subscriptions/00000000-0000-4000-8000-000000000001`,
+  resource group `rg-foundry-demo-not-live`, Foundry account
+  `foundry-demo-not-live`, Foundry project
+  `foundry-demo-project-not-live`, and search service
+  `search-demo-not-live`.
+- The validated index name is retained as `permission-aware-documents`; its
+  public endpoint example is the non-routable
+  `https://example.invalid/search/indexes/permission-aware-documents`.
+  No bearer tokens, account keys, user identifiers, response bodies, or live
+  resource identifiers are recorded.
 
 ## Validation log
 

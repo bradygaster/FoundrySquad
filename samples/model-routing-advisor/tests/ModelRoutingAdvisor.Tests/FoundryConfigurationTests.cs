@@ -23,14 +23,14 @@ public sealed class FoundryConfigurationTests
         {
             Environment.SetEnvironmentVariable(
                 FoundryOptions.EndpointVariable,
-                "https://example.services.ai.azure.com/api/projects/example-project");
+                "https://example.invalid/api/projects/example-project");
             Environment.SetEnvironmentVariable(FoundryOptions.LowCostDeploymentVariable, "low");
             Environment.SetEnvironmentVariable(FoundryOptions.HighCapabilityDeploymentVariable, "high");
 
             var options = FoundryOptions.FromEnvironment();
 
             Assert.Equal(
-                "https://example.services.ai.azure.com/api/projects/example-project/",
+                "https://example.invalid/api/projects/example-project/",
                 options.Endpoint.AbsoluteUri);
         }
         finally

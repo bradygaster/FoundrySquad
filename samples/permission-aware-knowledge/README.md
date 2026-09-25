@@ -1,5 +1,9 @@
 # Permission-aware grounded knowledge
 
+> **This example is NOT LIVE.** It contains no real Azure subscription, tenant,
+> resource, identity, endpoint, request, or response identifiers. The optional
+> provider requires caller-supplied endpoint configuration.
+
 This .NET 8 console sample answers questions only from documents the caller is
 allowed to read. Its default path is local-first: checked-in synthetic fixtures,
 deterministic token ranking, deterministic passage selection, and explicit

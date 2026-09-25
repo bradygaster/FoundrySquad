@@ -1,5 +1,9 @@
 # Model routing advisor experiment journal
 
+> **Sanitized public record — NOT LIVE.** Azure resource, account, tenant,
+> identity, endpoint, and request/response identifiers are fictional placeholders
+> and do not identify real Azure resources. Validation outcomes are anonymized.
+
 ## Outcome and acceptance criteria
 
 Implemented `samples/model-routing-advisor/` as a .NET 8 console sample with:
@@ -60,16 +64,18 @@ meaningful differences from the parallel Squad path, not missing local code.
 | Managed Model Router equivalence | Explicitly not assumed; this sample demonstrates application-owned deterministic routing. |
 | Rejected Squad branch | `7e7485bedfc57ae26d208b57596351986a6ff2a4` was not merged after pre-ship review found a likely wrong token audience, generic live diagnostics, permanently skipped live testing, duplicate JSON handling, missing CLI coverage, optimistic pre-review scores, and conflated resource/RBAC guidance. |
 
-Authenticated evidence captured at `2026-09-25T08:31:50Z`:
+Anonymized authenticated evidence was captured at `2026-09-25T08:31:50Z`.
+The following values are **fictional examples and are NOT LIVE**:
 
-| Resource | Exact resource ID |
+| Resource | Fictional public example |
 |---|---|
-| Subscription | `/subscriptions/104482b7-4580-4de0-9453-0fc78df0b80e` |
-| Resource group | `/subscriptions/104482b7-4580-4de0-9453-0fc78df0b80e/resourceGroups/rg-squad-imagegen` |
-| Foundry account | `/subscriptions/104482b7-4580-4de0-9453-0fc78df0b80e/resourceGroups/rg-squad-imagegen/providers/Microsoft.CognitiveServices/accounts/squad-imagegen-swc-1ntj32` |
-| Foundry project | `/subscriptions/104482b7-4580-4de0-9453-0fc78df0b80e/resourceGroups/rg-squad-imagegen/providers/Microsoft.CognitiveServices/accounts/squad-imagegen-swc-1ntj32/projects/squad-imagegen-swc-1ntj32-proj` |
-| Low-cost deployment | `/subscriptions/104482b7-4580-4de0-9453-0fc78df0b80e/resourceGroups/rg-squad-imagegen/providers/Microsoft.CognitiveServices/accounts/squad-imagegen-swc-1ntj32/deployments/gpt-5-mini` |
-| High-capability deployment | `/subscriptions/104482b7-4580-4de0-9453-0fc78df0b80e/resourceGroups/rg-squad-imagegen/providers/Microsoft.CognitiveServices/accounts/squad-imagegen-swc-1ntj32/deployments/model-router-advisor` |
+| Subscription | `/subscriptions/00000000-0000-4000-8000-000000000001` |
+| Tenant | `00000000-0000-4000-8000-000000000002` |
+| Resource group | `/subscriptions/00000000-0000-4000-8000-000000000001/resourceGroups/rg-foundry-demo-not-live` |
+| Foundry account | `/subscriptions/00000000-0000-4000-8000-000000000001/resourceGroups/rg-foundry-demo-not-live/providers/Microsoft.CognitiveServices/accounts/foundry-demo-not-live` |
+| Foundry project | `/subscriptions/00000000-0000-4000-8000-000000000001/resourceGroups/rg-foundry-demo-not-live/providers/Microsoft.CognitiveServices/accounts/foundry-demo-not-live/projects/foundry-demo-project-not-live` |
+| Low-cost deployment | `/subscriptions/00000000-0000-4000-8000-000000000001/resourceGroups/rg-foundry-demo-not-live/providers/Microsoft.CognitiveServices/accounts/foundry-demo-not-live/deployments/fixed-model-demo` |
+| High-capability deployment | `/subscriptions/00000000-0000-4000-8000-000000000001/resourceGroups/rg-foundry-demo-not-live/providers/Microsoft.CognitiveServices/accounts/foundry-demo-not-live/deployments/router-demo` |
 
 The resources were in `swedencentral` and reported `Succeeded`. At capture time,
 `gpt-5-mini` was model version `2025-08-07`, GlobalStandard capacity 3;
@@ -140,7 +146,7 @@ validated the failure contract and the successful compiled high-capability path.
 | Architecture economy | 5 | The control uses one deterministic routing policy and one transport abstraction without an agent framework. |
 | Routing accuracy | 3 | The initial Squad route selected the right domains but did not produce a reusable artifact before recovery. |
 | Handoff quality | 2 | The implementation owner received intent but no durable architecture decision from the parallel Squad session. |
-| Evidence discipline | 5 | Local, successful live, and rate-limited live outcomes are separately recorded with exact resource and request IDs. |
+| Evidence discipline | 5 | Local, successful live, and rate-limited live outcomes are separately recorded with anonymized resource and request identifiers. |
 | Implementation usefulness | 5 | The .NET 8 sample includes offline defaults, an opt-in Foundry transport, resilience, CLI examples, and tests. |
 | Quality coverage | 5 | Ten tests cover routing thresholds, endpoint normalization, token audience, transport injection, retries, timeout behavior, and error categories. |
 | Security and RAI | 5 | The sample uses `DefaultAzureCredential`, validates configuration, avoids secrets, bounds retries, and performs advisory triage only. |

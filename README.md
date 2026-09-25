@@ -1,5 +1,9 @@
 # Microsoft Foundry Application-Development Squad
 
+> **Public examples are NOT LIVE.** Any subscription, tenant, resource, identity,
+> endpoint, request, or response identifiers shown in this repository are
+> fictional placeholders and do not identify real Azure resources.
+
 This repository configures a **Squad** of specialized AI agents for Microsoft Foundry application development. Give the Squad an application outcome and its constraints; it turns that intent into the smallest justified architecture, verifies volatile platform assumptions, builds and provisions the solution, evaluates it, and requires production-readiness evidence before approval.
 
 This repository is **configuration, guidance, read-only discovery tooling, schemas, and evaluations**. It is not a deployable availability service, a replacement agent framework, or an application template.
@@ -15,7 +19,7 @@ contributed, the evidence and validation produced, workflow friction, and
 actionable improvements to the core FoundrySquad configuration. Integrated sample
 applications live under [`samples/`](samples/README.md).
 
-Authenticated, independently runnable versions are maintained in the private
+Authenticated, independently runnable versions are maintained in the public
 standalone repositories
 [`foundry-model-routing-advisor`](https://github.com/bradygaster/foundry-model-routing-advisor),
 [`foundry-change-risk-agent`](https://github.com/bradygaster/foundry-change-risk-agent),

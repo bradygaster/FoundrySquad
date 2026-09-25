@@ -1,5 +1,9 @@
 # Change Risk Advisor
 
+> **This example is NOT LIVE.** It contains no real Azure subscription, tenant,
+> resource, identity, endpoint, request, or response identifiers. Any future
+> cloud adapter must require caller-supplied configuration.
+
 A local-first .NET console sample showing the smallest useful tool-using agent
 shape: an observable agent request, host-validated dispatch to one typed read-only
 tool, a tool-result continuation, and one final advisory.

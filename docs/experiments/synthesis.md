@@ -1,5 +1,9 @@
 # Foundry Sample Lab Synthesis
 
+> **Sanitized public record — NOT LIVE.** Azure resource, account, tenant,
+> identity, endpoint, and request/response identifiers are fictional placeholders
+> and do not identify real Azure resources. Validation outcomes are anonymized.
+
 ## Result
 
 The lab produced three integrated, local-first samples:
@@ -15,7 +19,7 @@ All three experiment journals pass the shared validator. Repository tests pass
 
 ## Standalone repository follow-up
 
-The integrated samples were copied into private standalone repositories so each
+The integrated samples were copied into public standalone repositories so each
 application can be built, tested, provisioned, and operated without depending on
 the FoundrySquad source tree:
 
@@ -25,11 +29,14 @@ the FoundrySquad source tree:
 | Tool-using agent | [`bradygaster/foundry-change-risk-agent`](https://github.com/bradygaster/foundry-change-risk-agent) |
 | Grounded knowledge | [`bradygaster/foundry-permission-aware-knowledge`](https://github.com/bradygaster/foundry-permission-aware-knowledge) |
 
-Authenticated follow-up work reuses subscription
-`104482b7-4580-4de0-9453-0fc78df0b80e`, resource group
-`rg-squad-imagegen`, Foundry account `squad-imagegen-swc-1ntj32`, and project
-`squad-imagegen-swc-1ntj32-proj`. The project endpoint is
-`https://squad-imagegen-swc-1ntj32.services.ai.azure.com/api/projects/squad-imagegen-swc-1ntj32-proj`.
+Authenticated follow-up work reused an existing subscription, resource group,
+Foundry account, and project. Public resource identifiers are represented only
+by **fictional, NOT LIVE** examples such as subscription
+`00000000-0000-4000-8000-000000000001`, tenant
+`00000000-0000-4000-8000-000000000002`, resource group
+`rg-foundry-demo-not-live`, account `foundry-demo-not-live`, and project
+`foundry-demo-project-not-live`. The non-routable public endpoint example is
+`https://example.invalid/foundry/projects/foundry-demo-project-not-live`.
 Calls use Microsoft Entra authentication with the
 `https://ai.azure.com/.default` scope; Azure AI Search knowledge retrieval uses
 `https://search.azure.com/.default`.
@@ -55,9 +62,8 @@ canonically derives ID, classification, evidence factors, and mandatory human
 review from the authoritative tool result while still requiring parseable model
 output.
 
-The grounded-knowledge standalone acceptance used Azure AI Search resource
-`/subscriptions/104482b7-4580-4de0-9453-0fc78df0b80e/resourceGroups/rg-squad-imagegen/providers/Microsoft.Search/searchServices/fsq-knowledge-swc-1ntj32`
-with index `permission-aware-documents`, knowledge source
+The grounded-knowledge standalone acceptance used an anonymized Azure AI Search
+resource with index `permission-aware-documents`, knowledge source
 `permission-aware-kb-source`, and knowledge base `permission-aware-kb`. The live
 application called the `2026-08-01-preview` knowledge-base retrieve action and
 the project `gpt-5-mini` Responses API. The authorized tenant-a Engineering
