@@ -1,5 +1,9 @@
 # Microsoft Foundry Samples
 
+> **These examples are NOT LIVE.** Any resource names, GUIDs, endpoints, identity
+> IDs, or request/response IDs are fictional placeholders and do not identify
+> real Azure resources. Authenticated runs require caller-supplied configuration.
+
 These samples are produced by the [Foundry Sample Lab](../docs/experiments/README.md).
 They are local-first demonstrations: default builds and tests use deterministic
 fixtures or fake transports, while authenticated Microsoft Foundry execution is

@@ -1,5 +1,10 @@
 # Foundry Sample Lab
 
+> **All Azure examples in this lab are NOT LIVE.** Resource-facing names, GUIDs,
+> endpoints, identity IDs, and request/response IDs are fictional placeholders
+> and do not identify real Azure resources. Validation outcomes are retained in
+> anonymized form.
+
 This lab exercises FoundrySquad by building real applications in isolated local
 worktrees. Each scenario is owned by a separate Squad session so the application,
 team interactions, evidence, and failures can be reviewed independently.

@@ -1,5 +1,9 @@
 # Scenario Journal: Change Risk Advisor
 
+> **Sanitized public record — NOT LIVE.** Azure resource, account, tenant,
+> identity, endpoint, and request/response identifiers are fictional placeholders
+> and do not identify real Azure resources. Validation outcomes are anonymized.
+
 ## Outcome and acceptance criteria
 
 - **Outcome:** Produce a human-reviewed change-risk advisory grounded only in a
@@ -38,7 +42,7 @@ preserving the deterministic host as the safety authority.
 | --- | --- | --- | --- | --- |
 | A single typed local tool is sufficient for the sample behavior. | 2026-09-25 | Local repository | EVIDENCED | None for local behavior. |
 | Malformed, missing, failed-test, and cancelled paths fail safely. | 2026-09-25 | Local repository | EVIDENCED | Model-service failure needs an authenticated adapter test. |
-| Current Foundry Responses API can host the same contract. | 2026-09-25 | Project `squad-imagegen-swc-1ntj32-proj`, deployment `gpt-5-mini` | EVIDENCED | Production load and managed-identity hosting remain. |
+| Current Foundry Responses API can host the same contract. | 2026-09-25 | Anonymized project and fixed-model deployment; public identifiers are intentionally omitted | EVIDENCED | Production load and managed-identity hosting remain. |
 | Runtime identity is secretless. | 2026-09-25 | Microsoft Entra scope `https://ai.azure.com/.default` | EVIDENCED | Production workload identity remains host-specific. |
 
 ## Validation log

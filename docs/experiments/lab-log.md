@@ -1,5 +1,9 @@
 # Foundry Sample Lab Log
 
+> **Sanitized public record — NOT LIVE.** Azure resource, account, tenant,
+> identity, endpoint, and request/response identifiers are fictional placeholders
+> and do not identify real Azure resources. Validation outcomes are anonymized.
+
 This log tracks the parent coordination session and the evidence used to improve
 FoundrySquad. Scenario-specific implementation detail belongs in each child
 journal.
@@ -103,13 +107,12 @@ The lab is complete only when:
 
 ### Standalone authenticated follow-up
 
-- Created private standalone repositories for each sample:
+- Created standalone public repositories for each sample:
   - `bradygaster/foundry-model-routing-advisor`
   - `bradygaster/foundry-change-risk-agent`
   - `bradygaster/foundry-permission-aware-knowledge`
-- Reused the existing Foundry project
-  `squad-imagegen-swc-1ntj32-proj` in resource group `rg-squad-imagegen`
-  rather than creating duplicate accounts.
+- Reused an existing Foundry project rather than creating duplicate accounts.
+  Public project and resource-group identifiers are intentionally anonymized.
 - Authenticated to the project Responses API with the
   `https://ai.azure.com/.default` scope and observed a completed
   `FOUNDRY_E2E_OK` response from the existing `gpt-5-mini` deployment.
@@ -125,10 +128,8 @@ The lab is complete only when:
   scenarios passed. A repeated run exposed nondeterministic model semantics;
   the host now derives all safety-critical advisory fields from the
   authoritative tool result while retaining strict model-output parsing.
-- Completed the grounded-knowledge offline/live acceptance matrix against search
-  service resource ID
-  `/subscriptions/104482b7-4580-4de0-9453-0fc78df0b80e/resourceGroups/rg-squad-imagegen/providers/Microsoft.Search/searchServices/fsq-knowledge-swc-1ntj32`
-  with index `permission-aware-documents`, knowledge source
+- Completed the grounded-knowledge offline/live acceptance matrix against an
+  anonymized search service with index `permission-aware-documents`, knowledge source
   `permission-aware-kb-source`, and knowledge base `permission-aware-kb`.
   Authorized retrieval and model synthesis returned one exact citation;
   unauthorized, unknown, and adversarial scenarios returned zero citations.
