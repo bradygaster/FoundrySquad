@@ -199,6 +199,41 @@ Deployment/offline requirements: <constraints>
 Success criteria: <measurable outcomes>
 ```
 
+Not sure where to start? Try one of these prompts — each maps to an evidence-backed job in [`.squad/artifacts/jtbd-catalog.md`](.squad/artifacts/jtbd-catalog.md):
+
+```text
+Design a Foundry architecture that automates insurance claims intake and
+adjudication, cutting per-claim handling time and manual review load while
+keeping a human in the loop for high-value or ambiguous claims.
+```
+
+```text
+Design a Foundry architecture for a customer-facing banking agent that
+resolves routine account and compliance questions autonomously, escalating
+to a human for anything outside its confidence or policy bounds.
+```
+
+```text
+Design a Foundry architecture that grounds a support/knowledge agent in our
+internal documentation and policies so answers are accurate, cited, and
+permission-aware, instead of relying on the model's general knowledge.
+```
+
+```text
+Design a Foundry architecture for a multi-agent code-review or content-review
+pipeline where one agent drafts and a second, independent agent critiques or
+verifies before anything reaches a human.
+```
+
+```text
+Design a Foundry architecture that extracts structured data (fields, tables,
+line items) from scanned or photographed documents and turns it into
+queryable records, with a confidence-scored human review step for
+low-confidence extractions.
+```
+
+See the full catalog for more jobs, citations, and confidence ratings before committing to one.
+
 ### 5. Produce durable architecture artifacts
 
 Ask the Squad to complete the relevant templates in [`.squad/artifacts/templates/`](.squad/artifacts/templates/):
