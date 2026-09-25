@@ -8,7 +8,8 @@
     "doctor": "node scripts/foundry-doctor.js",
     "availability": "node scripts/foundry-availability.js",
     "eval": "node scripts/run-foundry-squad-evals.js --replay test/fixtures/eval-responses.json",
-    "validate:experiments": "node scripts/validate-experiment-journal.js"
+    "validate:experiments": "node scripts/validate-experiment-journal.js",
+    "summarize:experiments": "node scripts/summarize-experiment-journals.js"
   },
   "engines": {
     "node": ">=20"

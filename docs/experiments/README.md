@@ -37,10 +37,12 @@ Validate completed journals with:
 
 ```sh
 npm run validate:experiments
+npm run summarize:experiments
 ```
 
 The validator requires every comparison dimension to include a 1-5 score and
-specific supporting evidence.
+specific supporting evidence. The summarizer calculates cross-scenario averages
+and ranks identically named core improvements using the lab priority formula.
 
 ## Comparison rubric
 
