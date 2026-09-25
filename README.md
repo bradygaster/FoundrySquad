@@ -15,6 +15,13 @@ contributed, the evidence and validation produced, workflow friction, and
 actionable improvements to the core FoundrySquad configuration. Integrated sample
 applications live under [`samples/`](samples/README.md).
 
+Authenticated, independently runnable versions are maintained in the private
+standalone repositories
+[`foundry-model-routing-advisor`](https://github.com/bradygaster/foundry-model-routing-advisor),
+[`foundry-change-risk-agent`](https://github.com/bradygaster/foundry-change-risk-agent),
+and
+[`foundry-permission-aware-knowledge`](https://github.com/bradygaster/foundry-permission-aware-knowledge).
+
 - [`samples/model-routing-advisor/`](samples/model-routing-advisor/) -
   local-first .NET 8 deterministic model routing with an opt-in Foundry transport.
 - [`samples/change-risk-agent/`](samples/change-risk-agent/) -

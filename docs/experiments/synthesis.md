@@ -6,9 +6,9 @@ The lab produced three integrated, local-first samples:
 
 | Scenario | Sample | Offline validation | Authenticated Foundry status |
 | --- | --- | --- | --- |
-| Direct model / Model Router | [`model-routing-advisor`](../../samples/model-routing-advisor/README.md) | 9/9 tests passed | Adapter included; target environment not evidenced |
-| Tool-using agent | [`change-risk-agent`](../../samples/change-risk-agent/README.md) | 10/10 checks passed | Adapter boundary documented; runtime not evidenced |
-| Grounded knowledge | [`permission-aware-knowledge`](../../samples/permission-aware-knowledge/README.md) | 4/4 evaluations passed | Adapter included; Foundry IQ/model runtime not evidenced |
+| Direct model / Model Router | [`model-routing-advisor`](../../samples/model-routing-advisor/README.md) | 10/10 tests passed | Standalone app verified against fixed model and Model Router |
+| Tool-using agent | [`change-risk-agent`](../../samples/change-risk-agent/README.md) | 10/10 checks passed | Standalone app verified through real function-call continuation |
+| Grounded knowledge | [`permission-aware-knowledge`](../../samples/permission-aware-knowledge/README.md) | 4/4 evaluations passed | Standalone app verified through Foundry IQ retrieval and model synthesis |
 
 All three experiment journals pass the shared validator. Repository tests pass
 42/42.
@@ -37,21 +37,33 @@ Calls use Microsoft Entra authentication with the
 The shared project Responses API was observed returning a completed
 `FOUNDRY_E2E_OK` response from `gpt-5-mini`. A separately provisioned
 `model-router-advisor` deployment (model `model-router`, version `2025-11-18`,
-GlobalStandard capacity 1) was also observed completing a request and selecting
-`gpt-5.4-mini-2026-03-17` as its backing model. The existing `gpt-5-mini`
+GlobalStandard capacity 10) was also observed completing requests and selecting
+both `gpt-5.4-mini-2026-03-17` and `grok-4-1-fast-reasoning` as backing models.
+The compiled standalone CLI completed the high-capability path in one attempt
+with `HIGH_ROUTE_OK`. The existing `gpt-5-mini`
 deployment has GlobalStandard capacity 3 and returned transient HTTP 429
 responses before bounded retry succeeded, so rate-limit handling is part of the
 standalone runtime contract rather than an undocumented environmental detail.
 
-The grounded-knowledge live acceptance used Azure AI Search resource
+The tool-agent standalone repository completed the real project Responses
+lifecycle: strict function call, exact call-ID/name/argument binding, one
+read-only host dispatch, tool-result continuation, and final advisory. The
+merged implementation passed 13 offline checks and authenticated known,
+unknown, and adversarial scenarios. A repeated live run exposed that JSON schema
+shape alone did not constrain safety-critical semantic values; the host now
+canonically derives ID, classification, evidence factors, and mandatory human
+review from the authoritative tool result while still requiring parseable model
+output.
+
+The grounded-knowledge standalone acceptance used Azure AI Search resource
 `/subscriptions/104482b7-4580-4de0-9453-0fc78df0b80e/resourceGroups/rg-squad-imagegen/providers/Microsoft.Search/searchServices/fsq-knowledge-swc-1ntj32`
-and index `permission-aware-documents`. With tenant-a plus Engineering filtering,
-the Orion rollback query returned only `engineering-orion-runbook`. The
-Everyone-only and unknown-query cases returned zero documents, while the
-cross-tenant and quarantined Orion documents remained excluded. This validates
-the live permission-filter data plane. It does not convert the optional adapter
-into a Foundry IQ claim: no deployed gateway currently implements that JSON
-contract, so end-to-end grounded generation remains `NOT_EVIDENCED`.
+with index `permission-aware-documents`, knowledge source
+`permission-aware-kb-source`, and knowledge base `permission-aware-kb`. The live
+application called the `2026-08-01-preview` knowledge-base retrieve action and
+the project `gpt-5-mini` Responses API. The authorized tenant-a Engineering
+scenario returned one exact `engineering-orion-runbook` citation; unauthorized,
+unknown, and adversarial scenarios returned `InsufficientEvidence` with zero
+citations.
 
 ## Cross-scenario score
 
@@ -130,17 +142,16 @@ and version isolation for volatile Foundry IQ APIs.
 | Improvement | Why deferred |
 | --- | --- |
 | Permission-aware grounding template and shared citation evaluator | Valuable, but one knowledge scenario is insufficient to freeze a generic contract. |
-| Authenticated Foundry runtime contract probes | Require a selected tenant/project, identity scope, endpoints, and safe evidence storage. |
 | Tool decision fields for execution location, reachability, side effects, and logging | Strong single-scenario evidence; should be added with a dedicated template revision and reviewer test. |
-| Maintained SDK-backed tool-agent adapter | Package/API compatibility must be verified against a current authenticated environment rather than guessed from local tests. |
+| Production workload identity and CI live-smoke environment | Local Entra authentication is evidenced; managed identity and protected CI credentials require a selected deployment host. |
+| Reusable Foundry IQ provisioning module | The standalone Bicep and scripts are validated, but should mature through another knowledge-source shape before becoming a core generic module. |
 
 ## Remaining evidence gaps
 
-- No target Foundry project, deployment, tenant, region, quota, or capacity was
-  supplied.
-- No authenticated model, Model Router, function-tool, Foundry IQ, or runtime
-  latency/cost evidence was collected.
-- Production RBAC, observability export, deployment automation, rollback, and
-  service-backed evaluations remain scenario-specific follow-up work.
+- Production managed identity, protected CI live tests, centralized telemetry,
+  sustained load, and cost baselines remain unevidenced.
+- The original integrated samples remain local-first controls; the standalone
+  repositories are the authoritative authenticated implementations.
+- Foundry IQ uses a preview API and requires ongoing compatibility checks.
 
 These gaps are explicit and do not invalidate the offline application contracts.

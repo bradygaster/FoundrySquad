@@ -19,9 +19,9 @@ OpenAPI deployment, MCP, code execution, search/IQ, Toolbox, and local inference
 because none earned its lifecycle or safety cost for one synthetic lookup.
 
 The integrated sample uses a deterministic `IAdvisoryModel` so it remains runnable
-without external packages or credentials. Its documented adapter boundary is the
-place for a current Foundry Responses API or Agent Framework integration after
-authenticated compatibility evidence exists.
+without external packages or credentials. The standalone repository implements
+the same contract through the current Foundry project Responses API while
+preserving the deterministic host as the safety authority.
 
 ## Squad activity
 
@@ -38,8 +38,8 @@ authenticated compatibility evidence exists.
 | --- | --- | --- | --- | --- |
 | A single typed local tool is sufficient for the sample behavior. | 2026-09-25 | Local repository | EVIDENCED | None for local behavior. |
 | Malformed, missing, failed-test, and cancelled paths fail safely. | 2026-09-25 | Local repository | EVIDENCED | Model-service failure needs an authenticated adapter test. |
-| Current Foundry Responses API or Agent Framework can host the same contract. | 2026-09-25 | Public documentation only | DOCUMENTED_NOT_AUTHENTICATED | Verify package API, model/tool compatibility, project, region, quota, capacity, and runtime invocation. |
-| Production identity is secretless and least privilege. | 2026-09-25 | None | NOT_EVIDENCED | Add `DefaultAzureCredential` adapter and role evidence in a target environment. |
+| Current Foundry Responses API can host the same contract. | 2026-09-25 | Project `squad-imagegen-swc-1ntj32-proj`, deployment `gpt-5-mini` | EVIDENCED | Production load and managed-identity hosting remain. |
+| Runtime identity is secretless. | 2026-09-25 | Microsoft Entra scope `https://ai.azure.com/.default` | EVIDENCED | Production workload identity remains host-specific. |
 
 ## Validation log
 
@@ -47,6 +47,7 @@ authenticated compatibility evidence exists.
 | --- | --- | --- | --- |
 | `dotnet run --project samples/change-risk-agent/tests/ChangeRiskAgent.Tests` | PASS: 10 checks | Observable agent/tool lifecycle, allowlist and binding enforcement, one-call limit, input validation, exact lookup, conservative policy, missing evidence, human ownership, and cancellation. | Foundry SDK/API compatibility or cloud runtime behavior. |
 | `dotnet run --project samples/change-risk-agent/src/ChangeRiskAgent -- CHG-1001` | PASS; low-risk advisory emitted | The documented happy path is runnable. | Model quality, latency, cost, quota, or capacity. |
+| Standalone `RUN_FOUNDRY_LIVE_TESTS=1 ... -- --live` | PASS: 13 offline checks plus authenticated CHG-1001, CHG-9999, and adversarial CHG-1003 | Real function request, exact host dispatch, tool-result continuation, bounded 429 recovery, and mandatory human review. | Production backend and managed-identity hosting. |
 
 ## Friction and recovery
 
@@ -56,6 +57,7 @@ authenticated compatibility evidence exists.
 | The first journal used custom headings and no comparison scores. | Cross-scenario analysis was not mechanically reliable. | Added validator, summarizer, exact headings, and scored evidence. | Handoff depended on prose rather than an executable schema. | Keep journal validation in repository tests and run it before integration. |
 | The local machine only had the .NET 10 SDK template. | A requested .NET 8 scaffold failed. | Used .NET 10, which satisfies the repository's .NET 8-or-later requirement. | Installed SDK/template availability differed from the initial assumption. | Discover SDKs before selecting an exact target framework. |
 | Initial fallback called the repository before the agent requested a tool. | The code demonstrated a safe tool contract but not an agent/tool-call lifecycle. | Added explicit request, allowlisted host dispatch, typed tool-result continuation, and final response turns. | The architecture contract did not make lifecycle evidence an implementation gate. | Reviewer now rejects direct repository calls presented as agent evidence. |
+| Strict JSON schema constrained shape but not policy semantics. | A live run could return parseable JSON that failed the host safety policy. | The host now derives ID, classification, evidence factors, and human-review action solely from the authoritative tool result; a malicious-output regression verifies normalization. | Model-authored policy fields were incorrectly treated as trustworthy. | Require host-owned derivation for safety-critical decisions even when structured output is enabled. |
 
 ## What Squad did well
 
@@ -82,8 +84,8 @@ authenticated compatibility evidence exists.
 | Routing accuracy | 4 | The right specialists were selected, but broad fan-out delayed implementation. |
 | Handoff quality | 4 | Architecture handoffs were detailed; the initial journal schema required correction. |
 | Evidence discipline | 5 | Local, documentation, authenticated, and runtime evidence stayed separate. |
-| Implementation usefulness | 4 | The sample runs and tests offline; the authenticated Foundry adapter remains pending. |
-| Quality coverage | 5 | Ten checks cover lifecycle, host enforcement, policy, failure, and cancellation paths; live model grounding remains untested. |
+| Implementation usefulness | 5 | The local control and standalone authenticated implementation both run end to end. |
+| Quality coverage | 5 | Offline checks plus repeated authenticated known, unknown, adversarial, rate-limit, and malicious-model-output paths pass. |
 | Security and RAI | 5 | Read-only synthetic data, strict IDs, fail-closed output, no secrets, and human ownership. |
 | Ceremony efficiency | 2 | Architecture quality was high, but implementation started well after the Full-Mode target. |
 | Recovery behavior | 5 | The coordinator timeboxed work, added tooling, adapted the SDK target, and produced a runnable fallback. |

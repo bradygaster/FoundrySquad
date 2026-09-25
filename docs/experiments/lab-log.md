@@ -113,18 +113,22 @@ The lab is complete only when:
 - Authenticated to the project Responses API with the
   `https://ai.azure.com/.default` scope and observed a completed
   `FOUNDRY_E2E_OK` response from the existing `gpt-5-mini` deployment.
-- Provisioned `model-router-advisor` at GlobalStandard capacity 1 using
-  `model-router` version `2025-11-18`. A live request completed and reported
-  `gpt-5.4-mini-2026-03-17` as the selected backing model.
+- Provisioned `model-router-advisor` at GlobalStandard capacity 10 using
+  `model-router` version `2025-11-18`. Live requests completed with backing
+  models `gpt-5.4-mini-2026-03-17` and `grok-4-1-fast-reasoning`; the compiled
+  CLI completed the high-capability route with `HIGH_ROUTE_OK`.
 - Observed transient `rate_limit_exceeded` responses from the capacity-3
   `gpt-5-mini` deployment before bounded backoff succeeded. Standalone samples
   must preserve explicit retry limits and rate-limit diagnostics.
+- Completed the tool-agent standalone matrix through the real project Responses
+  API. Thirteen offline checks and authenticated known, unknown, and adversarial
+  scenarios passed. A repeated run exposed nondeterministic model semantics;
+  the host now derives all safety-critical advisory fields from the
+  authoritative tool result while retaining strict model-output parsing.
 - Completed the grounded-knowledge offline/live acceptance matrix against search
   service resource ID
   `/subscriptions/104482b7-4580-4de0-9453-0fc78df0b80e/resourceGroups/rg-squad-imagegen/providers/Microsoft.Search/searchServices/fsq-knowledge-swc-1ntj32`
-  and index `permission-aware-documents`. The authorized tenant-a Engineering
-  query returned only `engineering-orion-runbook`; the Everyone-only and unknown
-  queries returned zero results. Cross-tenant and quarantined Orion documents
-  were excluded. No deployed gateway implements the sample's optional JSON
-  adapter contract, so end-to-end Foundry IQ/model grounding remains
-  `NOT_EVIDENCED`.
+  with index `permission-aware-documents`, knowledge source
+  `permission-aware-kb-source`, and knowledge base `permission-aware-kb`.
+  Authorized retrieval and model synthesis returned one exact citation;
+  unauthorized, unknown, and adversarial scenarios returned zero citations.

@@ -56,7 +56,7 @@ meaningful differences from the parallel Squad path, not missing local code.
 | Retry safety | Only transient transport, timeout, rate-limit, and service failures retry. |
 | Secretless authentication | Real mode uses `DefaultAzureCredential`; configuration contains endpoint and deployment names, not keys. |
 | Runtime API shape | Authenticated validation uses the project Responses API at `openai/v1/responses` with the `https://ai.azure.com/.default` audience. |
-| Deployment availability | `gpt-5-mini` completed; `model-router-advisor` was provisioned but returned HTTP 429 after bounded retries and a later direct probe. |
+| Deployment availability | `gpt-5-mini` and `model-router-advisor` both completed through the compiled standalone CLI; transient HTTP 429 responses were preserved as resilience evidence. |
 | Managed Model Router equivalence | Explicitly not assumed; this sample demonstrates application-owned deterministic routing. |
 | Rejected Squad branch | `7e7485bedfc57ae26d208b57596351986a6ff2a4` was not merged after pre-ship review found a likely wrong token audience, generic live diagnostics, permanently skipped live testing, duplicate JSON handling, missing CLI coverage, optimistic pre-review scores, and conflated resource/RBAC guidance. |
 
@@ -86,7 +86,7 @@ response body containing user data was persisted.
 | Low-cost local route | Short prompt selects `LowCost` and fake model | Passed: score 0, one attempt, `offline-low-cost` |
 | High-capability local route | Complex prompt selects `HighCapability` and fake model | Passed: score 6, one attempt, `offline-high-capability` |
 | Authenticated low-cost route | `gpt-5-mini` responds through `DefaultAzureCredential` and the project Responses API | Passed: one attempt, sanitized response `ROUTE_LOW_OK` |
-| Authenticated high-capability route | `model-router-advisor` responds or returns a safely categorized bounded failure | HTTP 429 after three attempts; categorized `RateLimited`; service request IDs `366da583-67cc-43a1-814b-aac80f392350` and `7ee58857-7797-42f9-ad26-c23eb98d8a44`; later direct probe request ID `f97dd79913d1f03b9a349f2a63e5a6aa` confirmed the deployment rate limit |
+| Authenticated high-capability route | `model-router-advisor` responds through the compiled CLI and reports the selected backing model | Initial attempts safely categorized HTTP 429; subsequent merged-main run passed in one attempt with backing model `grok-4-1-fast-reasoning` and response `HIGH_ROUTE_OK` |
 
 ## Friction and recovery
 
@@ -102,10 +102,10 @@ temporarily built and run as `net10.0`, then restored to `net8.0`; all ten tests
 passed. Initial live attempts exposed two integration defects: relative URI
 resolution dropped the project name and returned HTTP 404, then the legacy
 chat-completions path returned HTTP 400. Endpoint normalization and the project
-Responses API corrected both defects. The low-cost route then passed. The Model
-Router deployment continued to return HTTP 429 after bounded retries and
-cooldowns, so the matrix records a safe rate-limit failure rather than claiming
-successful high-capability execution.
+Responses API corrected both defects. The low-cost route passed immediately.
+The Model Router deployment initially returned HTTP 429 after bounded retries,
+then completed after the shared rate window cleared. Preserving both outcomes
+validated the failure contract and the successful compiled high-capability path.
 
 ## What Squad did well
 
@@ -115,9 +115,9 @@ successful high-capability execution.
 | Routing and ownership | 3 | A parallel architecture path was attempted, and implementation recovery had a clear owner; the handoff lacked a durable intermediate artifact. |
 | Architecture quality | 4 | The resulting boundary is small, injectable, deterministic, and explicit about managed Model Router non-equivalence. |
 | Implementation completeness | 5 | Console app, fake and real transports, resilience, configuration, errors, docs, and tests are included. |
-| Test quality | 4 | Targeted offline tests cover core policy and failure behavior; live Foundry behavior remains environment-gated. |
+| Test quality | 5 | Targeted offline tests cover core policy and failure behavior, and both live routes were executed against the target project. |
 | Security and secret handling | 5 | No API-key path or committed secret values; real mode uses `DefaultAzureCredential` and HTTPS validation. |
-| Evidence discipline | 4 | Local versus authenticated claims are separated; authenticated evidence is intentionally still pending. |
+| Evidence discipline | 5 | Local, transient rate-limited, direct service, and successful compiled runtime evidence are recorded separately. |
 | Recovery behavior | 5 | Work resumed after the four-minute stall with a bounded, durable implementation rather than another open-ended delegation. |
 | Delivery efficiency | 4 | One owner completed the vertical slice; absence of early architecture output caused duplicated architecture effort. |
 

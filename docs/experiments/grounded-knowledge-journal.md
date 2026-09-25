@@ -106,11 +106,15 @@ the synthesis and deferred improvements.
 | Live search | Tenant and quarantine isolation | The authorized query excluded `other-tenant-orion-runbook` and quarantined `adversarial-orion-note` | PASS |
 | Live model | Shared project Responses API health | Completed `FOUNDRY_E2E_OK` on deployment `gpt-5-mini`; transient HTTP 429 recovered with bounded backoff | PASS |
 | Live end-to-end | Sample adapter -> deployed knowledge gateway -> model | No gateway implementing the sample JSON contract was deployed | NOT_EVIDENCED |
+| Standalone live end-to-end | Foundry IQ knowledge-base retrieve -> host authorization/ranking -> project model synthesis | Authorized scenario returned one exact `engineering-orion-runbook` citation; unauthorized, unknown, and adversarial scenarios returned `InsufficientEvidence` with zero citations | PASS |
 
 The live search rows validate the permission filter against the provisioned
 Azure AI Search index, not a Foundry IQ API contract. The final row remains
 `NOT_EVIDENCED` rather than treating a direct data-plane query or a generic model
-health probe as proof of an end-to-end grounded answer.
+health probe as proof of the original adapter. The standalone repository closes
+that gap with the supported `2026-08-01-preview` knowledge-base retrieve action,
+knowledge source `permission-aware-kb-source`, knowledge base
+`permission-aware-kb`, and project Responses model synthesis.
 
 ## Friction and recovery
 
