@@ -63,3 +63,9 @@ tests, or code that clearly marks cloud validation as pending.
 ## Handoff Contract
 
 Every handoff identifies the durable artifact, owner, status, evidence timestamp, authenticated scope, unresolved assumptions, and the exact acceptance condition for the receiving owner.
+
+Work that runs longer than two minutes without a final handoff publishes a durable
+checkpoint containing the artifact path, current status, timestamp, decisions made,
+open assumptions, next owner/action, and acceptance condition. Activity state or a
+chat update is not a substitute for a reusable artifact. If the owner cannot
+produce a checkpoint, the coordinator reassigns any safe non-blocked work.

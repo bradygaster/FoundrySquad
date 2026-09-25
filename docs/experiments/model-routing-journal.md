@@ -101,21 +101,24 @@ to clean once, build/test sequentially, then execute runtime checks with
 
 ## Core FoundrySquad improvements
 
-| Surface | Evidence | Impact | Effort | Confidence |
-|---|---|---|---|---|
-| Architecture-session timeout handoff | Separate session exceeded four minutes with no durable artifact. | High: downstream owners cannot reuse reasoning and must restart architecture work. | Medium: require a checkpoint artifact before long research and at a fixed timeout. | High |
-| Durable artifact heartbeat | The implementation owner knew a session existed but had no partial requirements or decision record. | High: parallel work appears active without producing composable progress. | Medium: publish status, assumptions, and next decision at two-minute intervals. | High |
-| Authenticated evidence contract | Local code can only mark deployment and availability claims as unverified. | High: prevents documentation evidence from being mistaken for subscription readiness. | Medium: standardize endpoint, tenant, region, timestamp, route, and result fields. | High |
-| Control-versus-Squad comparison template | Direct-owner capability limits had to be inferred and documented manually. | Medium: comparisons may score inconsistent dimensions across experiments. | Low: ship a canonical nine-dimension rubric and evidence scale. | High |
-| Minimal sample baseline | The recovery owner created policy, transport, resilience, and test conventions from scratch. | Medium: repeated sample work risks divergent error and retry semantics. | Medium: provide a maintained offline-first .NET sample template. | Medium |
+| Improvement | Core surface | Evidence | Impact (1-5) | Effort (1-5) | Confidence (1-3) |
+|---|---|---|---:|---:|---:|
+| Require a timeout handoff with a minimal decision artifact. | coordinator response mode | Separate session exceeded four minutes with no durable artifact, forcing downstream owners to restart architecture work. | 5 | 2 | 3 |
+| Publish a durable artifact heartbeat during long work. | coordinator prompt and handoff contract | The implementation owner knew a session existed but had no partial requirements or decision record. | 4 | 2 | 3 |
+| Standardize authenticated evidence fields. | evidence template and quality gate | Local code can only mark deployment and availability claims as unverified without endpoint, tenant, region, timestamp, route, and result evidence. | 5 | 3 | 3 |
+| Ship a control-versus-Squad comparison rubric. | experiment template | Direct-owner capability limits and scoring dimensions otherwise vary between experiments. | 3 | 1 | 3 |
+| Maintain an offline-first .NET sample baseline. | sample template | The recovery owner recreated routing, transport, resilience, and test conventions from scratch. | 4 | 3 | 2 |
 
 ## Comparison score
 
-**Direct implementation control: 39/45.** It scored strongly on a narrow,
-testable, secretless vertical slice and fast recovery. The missing six points
-reflect the areas a single implementation owner cannot honestly manufacture:
-team consensus, independent architecture/reviewer challenge, broad current
-product comparison, and authenticated tenant-specific evidence.
-
-The parallel Squad session should be scored only when it produces a durable
-artifact. Elapsed activity without reusable evidence is not counted as coverage.
+| Dimension | Score (1-5) | Evidence |
+|---|---:|---|
+| Architecture economy | 5 | The control uses one deterministic routing policy and one transport abstraction without an agent framework. |
+| Routing accuracy | 3 | The initial Squad route selected the right domains but did not produce a reusable artifact before recovery. |
+| Handoff quality | 2 | The implementation owner received intent but no durable architecture decision from the parallel Squad session. |
+| Evidence discipline | 5 | Local tests, documentation evidence, and authenticated Foundry runtime evidence are explicitly separated. |
+| Implementation usefulness | 5 | The .NET 8 sample includes offline defaults, an opt-in Foundry transport, resilience, CLI examples, and tests. |
+| Quality coverage | 5 | Eight tests cover routing thresholds, transport injection, retries, timeout behavior, and error categories. |
+| Security and RAI | 5 | The sample uses `DefaultAzureCredential`, validates configuration, avoids secrets, bounds retries, and performs advisory triage only. |
+| Ceremony efficiency | 2 | More than four minutes elapsed without a durable Squad artifact before the direct-owner recovery. |
+| Recovery behavior | 5 | The control delivered a complete tested vertical slice and recorded the missing specialist evidence honestly. |

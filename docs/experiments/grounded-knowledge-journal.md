@@ -36,6 +36,15 @@ parallel specialist evidence for tenant-specific Foundry IQ availability,
 current API shape, deployed-model compatibility, identity/RBAC review,
 production observability, or independent architecture and Responsible AI gates.
 
+The stopped Squad session later preserved process evidence at
+`87e02beefe6a5e8d80a5749e302c65ac7318f4b0`. Architect, Knowledge Engineer,
+Quality Engineer, Platform Engineer, Fact Checker, Agent Engineer, Reviewer, and
+Rai added deny-before-ranking tenant/group ACLs, injection quarantine, zero-leak
+and citation thresholds, secretless identity boundaries, API-version isolation,
+and explicit `NOT_EVIDENCED` cloud status. That artifact was not merged because
+the control sample was already integrated, but its specialist findings inform
+the synthesis and deferred improvements.
+
 ## Evidence and assumptions
 
 - All fixture content is synthetic and checked in.
@@ -92,24 +101,24 @@ secrets.
 
 ## Core FoundrySquad improvements
 
-| Surface | Evidence | Impact | Effort | Confidence |
-|---|---|---:|---:|---:|
-| Durable architecture timeout | The parallel architecture session exceeded four minutes without an artifact. | Add a timed fallback that writes a minimal decision stub before handing ownership back. | Medium | High |
-| Knowledge sample template | This implementation had to define ACL, evidence, and citation contracts from scratch. | Ship a reusable permission-aware grounding artifact template and evaluation checklist. | Medium | High |
-| Runtime contract verification | Foundry IQ and model endpoint shapes are volatile and tenant-dependent. | Add an authenticated probe that records API version, identity scope, RBAC result, and sanitized response schema. | High | Medium |
-| Cross-session handoff | The control owner received intent but no durable architecture artifact. | Require handoffs to name artifact path, status, timestamp, assumptions, and exact acceptance condition. | Low | High |
-| Citation evaluator | Local tests validate exact citations, but no shared evaluator exists. | Add a standard evaluator for citation presence, source authorization, quote support, and citation closure. | Medium | High |
+| Improvement | Core surface | Evidence | Impact (1-5) | Effort (1-5) | Confidence (1-3) |
+|---|---|---|---:|---:|---:|
+| Require a timed fallback with a minimal architecture stub. | coordinator response mode | The parallel architecture session exceeded four minutes without an artifact. | 5 | 2 | 3 |
+| Ship a permission-aware grounding sample template. | knowledge skill and artifact templates | This implementation had to define ACL, evidence, and citation contracts from scratch. | 4 | 3 | 3 |
+| Add authenticated Foundry runtime contract probes. | availability tooling and quality gate | Foundry IQ and model endpoint shapes are volatile and tenant-dependent. | 5 | 3 | 2 |
+| Enforce durable cross-session handoffs. | handoff contract | The control owner received intent but no artifact path, timestamped status, assumptions, or acceptance condition. | 4 | 2 | 3 |
+| Add a shared citation evaluator. | evaluation tooling | Local tests validate exact citations, but no shared evaluator covers authorization, quote support, and citation closure. | 4 | 3 | 3 |
 
 ## Comparison score
 
 | Dimension | Score (1-5) | Evidence |
 |---|---:|---|
-| Acceptance coverage | 5 | The sample, fixtures, evaluation executable, setup guide, and journal cover every supplied deliverable. |
-| Permission isolation | 5 | Authorization precedes ranking, tests prove restricted evidence never reaches generation, and failures do not disclose document existence. |
-| Grounding and citations | 5 | Answers require sufficient evidence and citations constrained to selected authorized passages. |
-| Offline determinism | 5 | Checked-in fixtures, ordinal tie-breaking, deterministic passage selection, and no model call on the default path. |
-| Foundry integration readiness | 3 | Secretless opt-in adapter and contracts exist, but no tenant-specific authenticated runtime evidence was available. |
-| Identity and secret hygiene | 5 | `DefaultAzureCredential` is isolated to opt-in runtime; no secrets or local Azure state are committed. |
-| Evaluation quality | 4 | Core authorization, citation, unknown-question, and generator-boundary cases are covered; live failure-mode and load tests remain. |
-| Documentation and operability | 4 | Setup and validation boundaries are explicit; production telemetry and deployment automation are intentionally out of scope. |
-| Squad coordination resilience | 3 | Implementation-owner recovery succeeded, but the parallel architecture session produced no durable artifact before timeout. |
+| Architecture economy | 5 | Authorization, deterministic retrieval, citation selection, and optional Foundry generation remain in one small application. |
+| Routing accuracy | 3 | Knowledge and platform concerns were identified, but the initial Squad session did not hand off a durable artifact before recovery. |
+| Handoff quality | 2 | The direct owner received the scenario contract but no reusable specialist architecture or evidence artifact. |
+| Evidence discipline | 5 | Local fixture validation is explicitly separated from authenticated Foundry IQ and model runtime evidence. |
+| Implementation usefulness | 5 | The .NET 8 sample includes fixtures, permission filtering, deterministic answers, citations, CLI documentation, and an opt-in Foundry adapter. |
+| Quality coverage | 5 | Four evaluations cover citation accuracy, permission isolation, unknown questions, and unauthorized evidence exclusion from generation. |
+| Security and RAI | 5 | Authorization happens before ranking/generation, failures do not disclose restricted document existence, and identity is secretless. |
+| Ceremony efficiency | 2 | The initial architecture session exceeded four minutes without a durable artifact. |
+| Recovery behavior | 5 | The implementation control delivered a clean release build, passing evaluations, and an explicit specialist-review gap. |

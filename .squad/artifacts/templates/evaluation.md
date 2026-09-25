@@ -2,8 +2,11 @@
 
 - Behaviors and risks:
 - Dataset / fixture provenance:
-- Deterministic tests:
-- Model/service-backed evaluations:
+- Offline deterministic tests:
+- Documentation-supported claims:
+- Authenticated environment smoke tests:
+- Observed runtime evaluations:
+- Unevidenced lanes and reason:
 - Evaluators and rationale:
 - Thresholds:
 - Tool/orchestration failure cases:

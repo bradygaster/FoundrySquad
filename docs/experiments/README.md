@@ -7,6 +7,9 @@ team interactions, evidence, and failures can be reviewed independently.
 The parent coordinator's chronological activity and early observations are in
 [the lab log](lab-log.md).
 
+The completed comparison and core changes are in the
+[lab synthesis](synthesis.md).
+
 ## Active scenarios
 
 | Scenario | Session | Scope | Required result |

@@ -80,3 +80,20 @@ The lab is complete only when:
 - recurring improvements are ranked from journal evidence;
 - justified core FoundrySquad changes are implemented and tested;
 - remaining authenticated Foundry evidence gaps are explicit.
+
+### Completion
+
+- Integrated model-routing control commit
+  `8cdd99cd1477ccf115b5fdf810d932e8b7d098ff`.
+- Integrated grounded-knowledge control commit
+  `951984288b1aad5f80d9399c5717d29785b8b033`.
+- Integrated the parent tool-agent sample and its validated journal.
+- Preserved the unmerged Squad-led grounded-knowledge process evidence at
+  `87e02beefe6a5e8d80a5749e302c65ac7318f4b0`.
+- Final validation passed: repository 42/42, model routing 8/8, grounded
+  knowledge 4/4, tool agent 5/5, and all three journals passed.
+- Applied core fixes for implementation timeboxing, durable checkpoints,
+  executable experiment tracking, and explicit evidence lanes.
+- Authenticated Foundry runtime evidence remains `NOT_EVIDENCED` because no
+  target tenant, project, deployment, identity scope, quota, or capacity was
+  supplied.

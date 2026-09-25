@@ -41,11 +41,17 @@ test('routing and ceremonies enforce Foundry gates', () => {
   const routing = read('.squad', 'routing.md');
   const ceremonies = read('.squad', 'ceremonies.md');
   const responseMode = read('.github', 'skills', 'coordinator-response-mode', 'SKILL.md');
+  const qualityCharter = read('.squad', 'agents', 'quality-engineer', 'charter.md');
+  const evaluationTemplate = read('.squad', 'artifacts', 'templates', 'evaluation.md');
   assert.match(routing, /Foundry Delivery Route/);
   assert.match(routing, /No false unavailable/);
   assert.match(routing, /launches implementation within 60 seconds/);
   assert.match(responseMode, /first implementation artifact within 60/);
   assert.match(responseMode, /must not block deterministic local code/i);
+  assert.match(routing, /longer than two minutes[\s\S]*durable\s+checkpoint/i);
+  assert.match(qualityCharter, /offline deterministic[\s\S]*authenticated environment smoke[\s\S]*observed runtime/i);
+  assert.match(qualityCharter, /NOT_EVIDENCED/);
+  assert.match(evaluationTemplate, /Authenticated environment smoke tests/);
   assert.equal((ceremonies.match(/\*\*Exit criteria:\*\*/g) || []).length, 2);
   for (const dimension of ['catalog presence', 'compatibility', 'regional availability', 'entitlement', 'quota', 'capacity', 'deployability', 'runtime health']) {
     assert.match(`${routing}\n${ceremonies}`.toLowerCase(), new RegExp(dimension));
@@ -76,6 +82,7 @@ test('developer docs schema doctor scenarios and runner exist', () => {
     ['docs', 'foundry-squad.md'],
     ['docs', 'experiments', 'README.md'],
     ['docs', 'experiments', 'lab-log.md'],
+    ['docs', 'experiments', 'synthesis.md'],
     ['docs', 'experiments', 'scenario-journal-template.md'],
     ['samples', 'README.md'],
     ['schemas', 'foundry-availability-result.schema.json'],
