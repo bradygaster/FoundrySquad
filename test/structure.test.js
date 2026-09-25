@@ -40,8 +40,32 @@ test('specialist charters define inputs outputs evidence and completion', () => 
 test('routing and ceremonies enforce Foundry gates', () => {
   const routing = read('.squad', 'routing.md');
   const ceremonies = read('.squad', 'ceremonies.md');
+  const responseMode = read('.github', 'skills', 'coordinator-response-mode', 'SKILL.md');
+  const qualityCharter = read('.squad', 'agents', 'quality-engineer', 'charter.md');
+  const reviewerCharter = read('.squad', 'agents', 'reviewer', 'charter.md');
+  const evaluationTemplate = read('.squad', 'artifacts', 'templates', 'evaluation.md');
+  const modelEvidenceTemplate = read('.squad', 'artifacts', 'templates', 'model-evidence.md');
+  const requirementsTemplate = read('.squad', 'artifacts', 'templates', 'requirements.md');
+  const architectureTemplate = read('.squad', 'artifacts', 'templates', 'architecture-decision.md');
   assert.match(routing, /Foundry Delivery Route/);
   assert.match(routing, /No false unavailable/);
+  assert.match(routing, /launches implementation within 60 seconds/);
+  assert.match(responseMode, /first implementation artifact within 60/);
+  assert.match(responseMode, /must not block deterministic local code/i);
+  assert.match(routing, /longer than two minutes[\s\S]*durable\s+checkpoint/i);
+  assert.match(qualityCharter, /offline deterministic[\s\S]*authenticated environment smoke[\s\S]*observed runtime/i);
+  assert.match(qualityCharter, /NOT_EVIDENCED/);
+  assert.match(evaluationTemplate, /Authenticated environment smoke tests/);
+  assert.match(evaluationTemplate, /Live-smoke opt-in trigger and skip\/block result/);
+  assert.match(modelEvidenceTemplate, /Endpoint family/);
+  assert.match(modelEvidenceTemplate, /Token audience/);
+  assert.match(modelEvidenceTemplate, /Data-plane RBAC role and scope/);
+  assert.match(ceremonies, /scorecards[\s\S]*finalized only[\s\S]*record their verdicts/i);
+  assert.match(reviewerCharter, /agent request[\s\S]*host dispatch[\s\S]*typed tool result[\s\S]*final response/i);
+  assert.match(reviewerCharter, /allowlist[\s\S]*side-effect class[\s\S]*exact request binding/i);
+  assert.match(requirementsTemplate, /Advisory vs action-taking/);
+  assert.match(requirementsTemplate, /Allowed side effects/);
+  assert.match(architectureTemplate, /Tool execution location and service reachability/);
   assert.equal((ceremonies.match(/\*\*Exit criteria:\*\*/g) || []).length, 2);
   for (const dimension of ['catalog presence', 'compatibility', 'regional availability', 'entitlement', 'quota', 'capacity', 'deployability', 'runtime health']) {
     assert.match(`${routing}\n${ceremonies}`.toLowerCase(), new RegExp(dimension));
@@ -70,9 +94,16 @@ test('developer docs schema doctor scenarios and runner exist', () => {
   for (const path of [
     ['README.md'],
     ['docs', 'foundry-squad.md'],
+    ['docs', 'experiments', 'README.md'],
+    ['docs', 'experiments', 'lab-log.md'],
+    ['docs', 'experiments', 'synthesis.md'],
+    ['docs', 'experiments', 'scenario-journal-template.md'],
+    ['samples', 'README.md'],
     ['schemas', 'foundry-availability-result.schema.json'],
     ['scripts', 'foundry-doctor.js'],
     ['scripts', 'run-foundry-squad-evals.js'],
+    ['scripts', 'validate-experiment-journal.js'],
+    ['scripts', 'summarize-experiment-journals.js'],
     ['test', 'fixtures', 'scenarios.json']
   ]) assert.ok(existsSync(join(ROOT, ...path)), `missing ${path.join('/')}`);
   const scenarios = JSON.parse(read('test', 'fixtures', 'scenarios.json'));
@@ -97,4 +128,27 @@ test('repository configuration avoids unsafe installers and embedded secret valu
   assert.doesNotMatch(content, /-----BEGIN [A-Z ]+PRIVATE KEY-----/);
   assert.doesNotMatch(content, /\b(?:ghp|sk-proj)-[A-Za-z0-9_-]{12,}\b/);
   assert.doesNotMatch(configContent, /[A-Z_]*(?:PASSWORD|TOKEN|SECRET)[A-Z_]*"?\s*[:=]\s*"(?!\$\{|<)[^"]+"/);
+});
+
+test('permission-aware knowledge sample includes offline evaluation and experiment evidence', () => {
+  for (const path of [
+    ['samples', 'permission-aware-knowledge', 'PermissionAwareKnowledge.slnx'],
+    ['samples', 'permission-aware-knowledge', 'fixtures', 'documents.json'],
+    ['samples', 'permission-aware-knowledge', 'src', 'PermissionAwareKnowledge', 'Program.cs'],
+    ['samples', 'permission-aware-knowledge', 'tests', 'PermissionAwareKnowledge.Evaluation', 'Program.cs'],
+    ['docs', 'experiments', 'grounded-knowledge-journal.md']
+  ]) assert.ok(existsSync(join(ROOT, ...path)), `missing ${path.join('/')}`);
+
+  const journal = read('docs', 'experiments', 'grounded-knowledge-journal.md');
+  for (const heading of [
+    'Outcome and acceptance criteria',
+    'Architecture decision',
+    'Squad activity',
+    'Evidence and assumptions',
+    'Validation log',
+    'Friction and recovery',
+    'What Squad did well',
+    'Core FoundrySquad improvements',
+    'Comparison score'
+  ]) assert.match(journal, new RegExp(`^## ${heading}$`, 'm'));
 });

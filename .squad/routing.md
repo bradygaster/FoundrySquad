@@ -53,6 +53,19 @@ here only when their agent names also exist in the casting registry.
 5. **No false unavailable** — authorization, not-found, throttling, service failures, and empty discovery results route back to evidence gathering; they are not availability conclusions.
 6. **Pre-ship gate** — completion requires application tests, infrastructure evidence, evaluation thresholds, operations evidence, secretless identity review, and Reviewer approval.
 
+The architecture gate is timeboxed for runnable sample work. When requirements,
+interfaces, and acceptance thresholds define a safe deterministic local seam, the
+coordinator launches implementation within 60 seconds while volatile evidence and
+review continue in parallel. Missing authenticated cloud evidence blocks cloud
+claims and deployment approval, not local fixtures, fake transports, contract
+tests, or code that clearly marks cloud validation as pending.
+
 ## Handoff Contract
 
 Every handoff identifies the durable artifact, owner, status, evidence timestamp, authenticated scope, unresolved assumptions, and the exact acceptance condition for the receiving owner.
+
+Work that runs longer than two minutes without a final handoff publishes a durable
+checkpoint containing the artifact path, current status, timestamp, decisions made,
+open assumptions, next owner/action, and acceptance condition. Activity state or a
+chat update is not a substitute for a reusable artifact. If the owner cannot
+produce a checkpoint, the coordinator reassigns any safe non-blocked work.

@@ -38,6 +38,14 @@
 
 - Verify catalog presence, compatibility, regional availability, entitlement, quota, capacity, deployability, and runtime health are not conflated.
 - Reject static model-region claims, credential-based shortcuts, unjustified REST, bespoke provisioning where `azd`/Bicep suffices, missing evals, and undiagnosable runtime paths.
+- A tool-using agent requires observable lifecycle evidence: agent request, exact
+  host dispatch, typed tool result, and final response. A deterministic rules
+  engine that calls a repository directly does not satisfy this gate.
+- Tool approval requires an allowlist, side-effect class, input/output schema,
+  exact request binding, invocation/iteration limit, timeout, failure contract,
+  execution location/reachability, and sensitive-data logging rules.
+- Hosted Agent approval requires a concrete managed endpoint, independent
+  scaling, cross-client reuse, dedicated identity, or hosted lifecycle need.
 - Approval requires traceable completion evidence from every applicable owner and no unresolved high-severity finding.
 
 ## Boundaries

@@ -124,3 +124,7 @@ Production data: 0% completion across 6 retros using markdown checklists, 100% a
 - Managed identity/Entra/OIDC and least-privilege evidence is present; no committed credentials exist.
 - Deployment, rollback, monitoring, alert/triage, and runtime verification are documented.
 - Reviewer records approval, or rejects with material findings and a different revision owner.
+- Experiment journals, scorecards, and completion claims are finalized only
+  after Reviewer, Rai, Quality Engineer, Platform Engineer, and Fact Checker
+  record their verdicts. Rejection invalidates optimistic pre-review scores and
+  requires a revised evidence entry.

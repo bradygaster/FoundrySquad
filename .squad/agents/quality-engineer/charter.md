@@ -38,6 +38,11 @@
 ## Evidence and Completion
 
 - Separate deterministic tests from model-graded or service-backed evaluations.
+- Define four explicit evidence lanes when applicable: offline deterministic,
+  documentation-supported, authenticated environment smoke, and observed runtime.
+- Missing credentials or target-environment access must skip or block the
+  authenticated lane with `NOT_EVIDENCED`; it must never produce a passing result
+  or block independent offline contract tests.
 - Record evaluator version/context, run timestamp, scope, threshold, and artifact location.
 - Complete only when required scenarios pass, failures are triaged, traces diagnose model/tool/orchestration paths, and acceptance thresholds are evidenced rather than asserted.
 
