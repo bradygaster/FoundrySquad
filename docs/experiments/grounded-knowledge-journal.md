@@ -59,6 +59,19 @@ the synthesis and deferred improvements.
   claim that every Foundry tenant exposes those routes unchanged.
 - `DefaultAzureCredential` is used only in the opt-in provider. No credential
   values or local Azure state are committed.
+- Authenticated follow-up used subscription
+  `/subscriptions/104482b7-4580-4de0-9453-0fc78df0b80e`, resource group
+  `/subscriptions/104482b7-4580-4de0-9453-0fc78df0b80e/resourceGroups/rg-squad-imagegen`,
+  Foundry account
+  `/subscriptions/104482b7-4580-4de0-9453-0fc78df0b80e/resourceGroups/rg-squad-imagegen/providers/Microsoft.CognitiveServices/accounts/squad-imagegen-swc-1ntj32`,
+  Foundry project
+  `/subscriptions/104482b7-4580-4de0-9453-0fc78df0b80e/resourceGroups/rg-squad-imagegen/providers/Microsoft.CognitiveServices/accounts/squad-imagegen-swc-1ntj32/projects/squad-imagegen-swc-1ntj32-proj`,
+  and search service
+  `/subscriptions/104482b7-4580-4de0-9453-0fc78df0b80e/resourceGroups/rg-squad-imagegen/providers/Microsoft.Search/searchServices/fsq-knowledge-swc-1ntj32`.
+- The live index is `permission-aware-documents` at
+  `https://fsq-knowledge-swc-1ntj32.search.windows.net/indexes/permission-aware-documents`.
+  These identifiers are non-secret resource metadata; bearer tokens, account
+  keys, user identifiers, and response bodies were not recorded.
 
 ## Validation log
 
@@ -73,10 +86,31 @@ the synthesis and deferred improvements.
   `engineering-orion-runbook` citation.
 - The same question with only the `Everyone` caller group returned generic
   insufficient evidence, zero citations, and no restricted content.
-- `npm test`: 38/38 repository tests passed, including the new sample structure
+- `npm test`: 42/42 repository tests passed, including the sample structure
   and required-journal-heading check.
-- Authenticated Foundry IQ/runtime validation intentionally not run without a
-  configured tenant, endpoints, identity, and authorization scope.
+- Authenticated Microsoft Entra access to Azure AI Search used scope
+  `https://search.azure.com/.default`. Sanitized schema evidence confirmed
+  filterable `tenantId`, `allowedGroups`, and `quarantined` fields.
+
+### Offline/live acceptance matrix
+
+| Mode | Acceptance check | Sanitized result | Status |
+|---|---|---|---|
+| Offline | Release solution build | 0 warnings, 0 errors | PASS |
+| Offline | Deterministic evaluation executable | 4/4 evaluations passed | PASS |
+| Offline | Authorized `Engineering` rollback question | Cited `engineering-orion-runbook` | PASS |
+| Offline | Same question with `Everyone` only | Generic insufficient evidence; zero citations | PASS |
+| Live search | Authorized tenant-a `Engineering` query for `Project Orion rollback` | HTTP 200; one result: `engineering-orion-runbook` | PASS |
+| Live search | Same query with `Everyone` only | HTTP 200; zero results | PASS |
+| Live search | Unknown `cafeteria menu` query with `Engineering` | HTTP 200; zero results | PASS |
+| Live search | Tenant and quarantine isolation | The authorized query excluded `other-tenant-orion-runbook` and quarantined `adversarial-orion-note` | PASS |
+| Live model | Shared project Responses API health | Completed `FOUNDRY_E2E_OK` on deployment `gpt-5-mini`; transient HTTP 429 recovered with bounded backoff | PASS |
+| Live end-to-end | Sample adapter -> deployed knowledge gateway -> model | No gateway implementing the sample JSON contract was deployed | NOT_EVIDENCED |
+
+The live search rows validate the permission filter against the provisioned
+Azure AI Search index, not a Foundry IQ API contract. The final row remains
+`NOT_EVIDENCED` rather than treating a direct data-plane query or a generic model
+health probe as proof of an end-to-end grounded answer.
 
 ## Friction and recovery
 

@@ -100,3 +100,31 @@ The lab is complete only when:
 - Authenticated Foundry runtime evidence remains `NOT_EVIDENCED` because no
   target tenant, project, deployment, identity scope, quota, or capacity was
   supplied.
+
+### Standalone authenticated follow-up
+
+- Created private standalone repositories for each sample:
+  - `bradygaster/foundry-model-routing-advisor`
+  - `bradygaster/foundry-change-risk-agent`
+  - `bradygaster/foundry-permission-aware-knowledge`
+- Reused the existing Foundry project
+  `squad-imagegen-swc-1ntj32-proj` in resource group `rg-squad-imagegen`
+  rather than creating duplicate accounts.
+- Authenticated to the project Responses API with the
+  `https://ai.azure.com/.default` scope and observed a completed
+  `FOUNDRY_E2E_OK` response from the existing `gpt-5-mini` deployment.
+- Provisioned `model-router-advisor` at GlobalStandard capacity 1 using
+  `model-router` version `2025-11-18`. A live request completed and reported
+  `gpt-5.4-mini-2026-03-17` as the selected backing model.
+- Observed transient `rate_limit_exceeded` responses from the capacity-3
+  `gpt-5-mini` deployment before bounded backoff succeeded. Standalone samples
+  must preserve explicit retry limits and rate-limit diagnostics.
+- Completed the grounded-knowledge offline/live acceptance matrix against search
+  service resource ID
+  `/subscriptions/104482b7-4580-4de0-9453-0fc78df0b80e/resourceGroups/rg-squad-imagegen/providers/Microsoft.Search/searchServices/fsq-knowledge-swc-1ntj32`
+  and index `permission-aware-documents`. The authorized tenant-a Engineering
+  query returned only `engineering-orion-runbook`; the Everyone-only and unknown
+  queries returned zero results. Cross-tenant and quarantined Orion documents
+  were excluded. No deployed gateway implements the sample's optional JSON
+  adapter contract, so end-to-end Foundry IQ/model grounding remains
+  `NOT_EVIDENCED`.

@@ -13,6 +13,46 @@ The lab produced three integrated, local-first samples:
 All three experiment journals pass the shared validator. Repository tests pass
 42/42.
 
+## Standalone repository follow-up
+
+The integrated samples were copied into private standalone repositories so each
+application can be built, tested, provisioned, and operated without depending on
+the FoundrySquad source tree:
+
+| Scenario | Standalone repository |
+| --- | --- |
+| Direct model / Model Router | [`bradygaster/foundry-model-routing-advisor`](https://github.com/bradygaster/foundry-model-routing-advisor) |
+| Tool-using agent | [`bradygaster/foundry-change-risk-agent`](https://github.com/bradygaster/foundry-change-risk-agent) |
+| Grounded knowledge | [`bradygaster/foundry-permission-aware-knowledge`](https://github.com/bradygaster/foundry-permission-aware-knowledge) |
+
+Authenticated follow-up work reuses subscription
+`104482b7-4580-4de0-9453-0fc78df0b80e`, resource group
+`rg-squad-imagegen`, Foundry account `squad-imagegen-swc-1ntj32`, and project
+`squad-imagegen-swc-1ntj32-proj`. The project endpoint is
+`https://squad-imagegen-swc-1ntj32.services.ai.azure.com/api/projects/squad-imagegen-swc-1ntj32-proj`.
+Calls use Microsoft Entra authentication with the
+`https://ai.azure.com/.default` scope; Azure AI Search knowledge retrieval uses
+`https://search.azure.com/.default`.
+
+The shared project Responses API was observed returning a completed
+`FOUNDRY_E2E_OK` response from `gpt-5-mini`. A separately provisioned
+`model-router-advisor` deployment (model `model-router`, version `2025-11-18`,
+GlobalStandard capacity 1) was also observed completing a request and selecting
+`gpt-5.4-mini-2026-03-17` as its backing model. The existing `gpt-5-mini`
+deployment has GlobalStandard capacity 3 and returned transient HTTP 429
+responses before bounded retry succeeded, so rate-limit handling is part of the
+standalone runtime contract rather than an undocumented environmental detail.
+
+The grounded-knowledge live acceptance used Azure AI Search resource
+`/subscriptions/104482b7-4580-4de0-9453-0fc78df0b80e/resourceGroups/rg-squad-imagegen/providers/Microsoft.Search/searchServices/fsq-knowledge-swc-1ntj32`
+and index `permission-aware-documents`. With tenant-a plus Engineering filtering,
+the Orion rollback query returned only `engineering-orion-runbook`. The
+Everyone-only and unknown-query cases returned zero documents, while the
+cross-tenant and quarantined Orion documents remained excluded. This validates
+the live permission-filter data plane. It does not convert the optional adapter
+into a Foundry IQ claim: no deployed gateway currently implements that JSON
+contract, so end-to-end grounded generation remains `NOT_EVIDENCED`.
+
 ## Cross-scenario score
 
 | Dimension | Average (1-5) | Interpretation |
